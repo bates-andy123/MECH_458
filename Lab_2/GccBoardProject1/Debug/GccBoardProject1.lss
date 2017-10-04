@@ -1,0 +1,284 @@
+
+GccBoardProject1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .data         00000000  00800100  00800100  000001dc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  1 .text         00000168  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  2 .bss          00000001  00800100  00800100  000001dc  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000001dc  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000020c  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 00000088  00000000  00000000  0000024c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000e3e  00000000  00000000  000002d4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 00000ca3  00000000  00000000  00001112  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   0000113b  00000000  00000000  00001db5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  000000a0  00000000  00000000  00002ef0  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    000119cd  00000000  00000000  00002f90  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    0000004c  00000000  00000000  0001495d  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 00000048  00000000  00000000  000149a9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_macro  00004230  00000000  00000000  000149f1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	4b c0       	rjmp	.+150    	; 0x98 <__ctors_end>
+   2:	00 00       	nop
+   4:	59 c0       	rjmp	.+178    	; 0xb8 <__bad_interrupt>
+   6:	00 00       	nop
+   8:	57 c0       	rjmp	.+174    	; 0xb8 <__bad_interrupt>
+   a:	00 00       	nop
+   c:	55 c0       	rjmp	.+170    	; 0xb8 <__bad_interrupt>
+   e:	00 00       	nop
+  10:	53 c0       	rjmp	.+166    	; 0xb8 <__bad_interrupt>
+  12:	00 00       	nop
+  14:	51 c0       	rjmp	.+162    	; 0xb8 <__bad_interrupt>
+  16:	00 00       	nop
+  18:	4f c0       	rjmp	.+158    	; 0xb8 <__bad_interrupt>
+  1a:	00 00       	nop
+  1c:	4d c0       	rjmp	.+154    	; 0xb8 <__bad_interrupt>
+  1e:	00 00       	nop
+  20:	4b c0       	rjmp	.+150    	; 0xb8 <__bad_interrupt>
+  22:	00 00       	nop
+  24:	49 c0       	rjmp	.+146    	; 0xb8 <__bad_interrupt>
+  26:	00 00       	nop
+  28:	47 c0       	rjmp	.+142    	; 0xb8 <__bad_interrupt>
+  2a:	00 00       	nop
+  2c:	45 c0       	rjmp	.+138    	; 0xb8 <__bad_interrupt>
+  2e:	00 00       	nop
+  30:	43 c0       	rjmp	.+134    	; 0xb8 <__bad_interrupt>
+  32:	00 00       	nop
+  34:	41 c0       	rjmp	.+130    	; 0xb8 <__bad_interrupt>
+  36:	00 00       	nop
+  38:	3f c0       	rjmp	.+126    	; 0xb8 <__bad_interrupt>
+  3a:	00 00       	nop
+  3c:	3d c0       	rjmp	.+122    	; 0xb8 <__bad_interrupt>
+  3e:	00 00       	nop
+  40:	3b c0       	rjmp	.+118    	; 0xb8 <__bad_interrupt>
+  42:	00 00       	nop
+  44:	39 c0       	rjmp	.+114    	; 0xb8 <__bad_interrupt>
+  46:	00 00       	nop
+  48:	37 c0       	rjmp	.+110    	; 0xb8 <__bad_interrupt>
+  4a:	00 00       	nop
+  4c:	35 c0       	rjmp	.+106    	; 0xb8 <__bad_interrupt>
+  4e:	00 00       	nop
+  50:	33 c0       	rjmp	.+102    	; 0xb8 <__bad_interrupt>
+  52:	00 00       	nop
+  54:	31 c0       	rjmp	.+98     	; 0xb8 <__bad_interrupt>
+  56:	00 00       	nop
+  58:	2f c0       	rjmp	.+94     	; 0xb8 <__bad_interrupt>
+  5a:	00 00       	nop
+  5c:	2d c0       	rjmp	.+90     	; 0xb8 <__bad_interrupt>
+  5e:	00 00       	nop
+  60:	2b c0       	rjmp	.+86     	; 0xb8 <__bad_interrupt>
+  62:	00 00       	nop
+  64:	29 c0       	rjmp	.+82     	; 0xb8 <__bad_interrupt>
+  66:	00 00       	nop
+  68:	27 c0       	rjmp	.+78     	; 0xb8 <__bad_interrupt>
+  6a:	00 00       	nop
+  6c:	25 c0       	rjmp	.+74     	; 0xb8 <__bad_interrupt>
+  6e:	00 00       	nop
+  70:	23 c0       	rjmp	.+70     	; 0xb8 <__bad_interrupt>
+  72:	00 00       	nop
+  74:	21 c0       	rjmp	.+66     	; 0xb8 <__bad_interrupt>
+  76:	00 00       	nop
+  78:	1f c0       	rjmp	.+62     	; 0xb8 <__bad_interrupt>
+  7a:	00 00       	nop
+  7c:	1d c0       	rjmp	.+58     	; 0xb8 <__bad_interrupt>
+  7e:	00 00       	nop
+  80:	1b c0       	rjmp	.+54     	; 0xb8 <__bad_interrupt>
+  82:	00 00       	nop
+  84:	19 c0       	rjmp	.+50     	; 0xb8 <__bad_interrupt>
+  86:	00 00       	nop
+  88:	17 c0       	rjmp	.+46     	; 0xb8 <__bad_interrupt>
+  8a:	00 00       	nop
+  8c:	15 c0       	rjmp	.+42     	; 0xb8 <__bad_interrupt>
+  8e:	00 00       	nop
+  90:	13 c0       	rjmp	.+38     	; 0xb8 <__bad_interrupt>
+  92:	00 00       	nop
+  94:	11 c0       	rjmp	.+34     	; 0xb8 <__bad_interrupt>
+	...
+
+00000098 <__ctors_end>:
+  98:	11 24       	eor	r1, r1
+  9a:	1f be       	out	0x3f, r1	; 63
+  9c:	cf ef       	ldi	r28, 0xFF	; 255
+  9e:	d0 e2       	ldi	r29, 0x20	; 32
+  a0:	de bf       	out	0x3e, r29	; 62
+  a2:	cd bf       	out	0x3d, r28	; 61
+
+000000a4 <__do_clear_bss>:
+  a4:	21 e0       	ldi	r18, 0x01	; 1
+  a6:	a0 e0       	ldi	r26, 0x00	; 0
+  a8:	b1 e0       	ldi	r27, 0x01	; 1
+  aa:	01 c0       	rjmp	.+2      	; 0xae <.do_clear_bss_start>
+
+000000ac <.do_clear_bss_loop>:
+  ac:	1d 92       	st	X+, r1
+
+000000ae <.do_clear_bss_start>:
+  ae:	a1 30       	cpi	r26, 0x01	; 1
+  b0:	b2 07       	cpc	r27, r18
+  b2:	e1 f7       	brne	.-8      	; 0xac <.do_clear_bss_loop>
+  b4:	4b d0       	rcall	.+150    	; 0x14c <main>
+  b6:	56 c0       	rjmp	.+172    	; 0x164 <_exit>
+
+000000b8 <__bad_interrupt>:
+  b8:	a3 cf       	rjmp	.-186    	; 0x0 <__vectors>
+
+000000ba <led_init>:
+  ba:	8f ef       	ldi	r24, 0xFF	; 255
+  bc:	8a b9       	out	0x0a, r24	; 10
+  be:	87 e0       	ldi	r24, 0x07	; 7
+  c0:	8b b9       	out	0x0b, r24	; 11
+  c2:	08 95       	ret
+
+000000c4 <night_rider_update>:
+  c4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
+  c8:	85 30       	cpi	r24, 0x05	; 5
+  ca:	20 f4       	brcc	.+8      	; 0xd4 <night_rider_update+0x10>
+  cc:	8b b1       	in	r24, 0x0b	; 11
+  ce:	88 0f       	add	r24, r24
+  d0:	8b b9       	out	0x0b, r24	; 11
+  d2:	03 c0       	rjmp	.+6      	; 0xda <night_rider_update+0x16>
+  d4:	8b b1       	in	r24, 0x0b	; 11
+  d6:	86 95       	lsr	r24
+  d8:	8b b9       	out	0x0b, r24	; 11
+  da:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <_edata>
+  de:	9f 5f       	subi	r25, 0xFF	; 255
+  e0:	8d ec       	ldi	r24, 0xCD	; 205
+  e2:	98 9f       	mul	r25, r24
+  e4:	81 2d       	mov	r24, r1
+  e6:	11 24       	eor	r1, r1
+  e8:	86 95       	lsr	r24
+  ea:	86 95       	lsr	r24
+  ec:	86 95       	lsr	r24
+  ee:	88 0f       	add	r24, r24
+  f0:	28 2f       	mov	r18, r24
+  f2:	22 0f       	add	r18, r18
+  f4:	22 0f       	add	r18, r18
+  f6:	82 0f       	add	r24, r18
+  f8:	98 1b       	sub	r25, r24
+  fa:	90 93 00 01 	sts	0x0100, r25	; 0x800100 <_edata>
+  fe:	08 95       	ret
+
+00000100 <mTimer>:
+#include <asf.h>
+#include <avr/io.h>
+#include "mtimer.h"
+
+extern void mTimer(int count)
+{
+ 100:	ac 01       	movw	r20, r24
+	int i = 0;
+	
+	TCCR1B |= _BV(WGM12); /*CTC mode*/
+ 102:	e1 e8       	ldi	r30, 0x81	; 129
+ 104:	f0 e0       	ldi	r31, 0x00	; 0
+ 106:	90 81       	ld	r25, Z
+ 108:	98 60       	ori	r25, 0x08	; 8
+ 10a:	90 83       	st	Z, r25
+	
+	OCR1A = 0x03e8; //1000
+ 10c:	88 ee       	ldi	r24, 0xE8	; 232
+ 10e:	93 e0       	ldi	r25, 0x03	; 3
+ 110:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 114:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+	
+	TCNT1 = 0x0000;
+ 118:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 11c:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+	
+	TIMSK1 |= 0b00000010;
+ 120:	ef e6       	ldi	r30, 0x6F	; 111
+ 122:	f0 e0       	ldi	r31, 0x00	; 0
+ 124:	90 81       	ld	r25, Z
+ 126:	92 60       	ori	r25, 0x02	; 2
+ 128:	90 83       	st	Z, r25
+	
+	TIFR1 |= _BV(OCF1A);
+ 12a:	b1 9a       	sbi	0x16, 1	; 22
+#include <avr/io.h>
+#include "mtimer.h"
+
+extern void mTimer(int count)
+{
+	int i = 0;
+ 12c:	20 e0       	ldi	r18, 0x00	; 0
+ 12e:	30 e0       	ldi	r19, 0x00	; 0
+	
+	TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+	
+	while (i < count)
+ 130:	05 c0       	rjmp	.+10     	; 0x13c <mTimer+0x3c>
+	{
+		if ((TIFR1 & 0x02) == 0x02)
+ 132:	b1 9b       	sbis	0x16, 1	; 22
+ 134:	fe cf       	rjmp	.-4      	; 0x132 <mTimer+0x32>
+		{
+			TIFR1 |= _BV(OCF1A);
+ 136:	b1 9a       	sbi	0x16, 1	; 22
+			i++;
+ 138:	2f 5f       	subi	r18, 0xFF	; 255
+ 13a:	3f 4f       	sbci	r19, 0xFF	; 255
+	
+	TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+	
+	while (i < count)
+ 13c:	24 17       	cp	r18, r20
+ 13e:	35 07       	cpc	r19, r21
+ 140:	1c f4       	brge	.+6      	; 0x148 <mTimer+0x48>
+	{
+		if ((TIFR1 & 0x02) == 0x02)
+ 142:	b1 9b       	sbis	0x16, 1	; 22
+ 144:	f6 cf       	rjmp	.-20     	; 0x132 <mTimer+0x32>
+ 146:	f7 cf       	rjmp	.-18     	; 0x136 <mTimer+0x36>
+ 148:	08 95       	ret
+
+0000014a <board_init>:
+ 14a:	08 95       	ret
+
+0000014c <main>:
+
+int main (void)
+{
+	/* Insert system clock initialization code here (sysclk_init()). */
+
+	TCCR1B |= _BV(CS10);
+ 14c:	e1 e8       	ldi	r30, 0x81	; 129
+ 14e:	f0 e0       	ldi	r31, 0x00	; 0
+ 150:	80 81       	ld	r24, Z
+ 152:	81 60       	ori	r24, 0x01	; 1
+
+	board_init();
+ 154:	80 83       	st	Z, r24
+ 156:	f9 df       	rcall	.-14     	; 0x14a <board_init>
+ 158:	b0 df       	rcall	.-160    	; 0xba <led_init>
+ 15a:	b4 df       	rcall	.-152    	; 0xc4 <night_rider_update>
+ 15c:	88 ec       	ldi	r24, 0xC8	; 200
+ 15e:	90 e0       	ldi	r25, 0x00	; 0
+ 160:	cf df       	rcall	.-98     	; 0x100 <mTimer>
+ 162:	fb cf       	rjmp	.-10     	; 0x15a <main+0xe>
+
+00000164 <_exit>:
+ 164:	f8 94       	cli
+
+00000166 <__stop_program>:
+ 166:	ff cf       	rjmp	.-2      	; 0x166 <__stop_program>

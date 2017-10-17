@@ -140,23 +140,43 @@ Disassembly of section .text:
   b8:	a3 cf       	rjmp	.-186    	; 0x0 <__vectors>
 
 000000ba <led_init>:
+
+#include <asf.h>
+
+
+extern void led_init(){
+	DDRA = 0b11111111; /* Sets all pins on Port D to output */
   ba:	8f ef       	ldi	r24, 0xFF	; 255
-  bc:	8a b9       	out	0x0a, r24	; 10
+  bc:	81 b9       	out	0x01, r24	; 1
+	PORTA = 0x07; /* initialize port to high – turn on LEDs */
   be:	87 e0       	ldi	r24, 0x07	; 7
-  c0:	8b b9       	out	0x0b, r24	; 11
+  c0:	82 b9       	out	0x02, r24	; 2
   c2:	08 95       	ret
 
 000000c4 <night_rider_update>:
+}
+
+extern void night_rider_update(){
+	//local variables
+	static uint8_t current_LED = 0;
+	if(current_LED < 5){
   c4:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <_edata>
   c8:	85 30       	cpi	r24, 0x05	; 5
   ca:	20 f4       	brcc	.+8      	; 0xd4 <night_rider_update+0x10>
-  cc:	8b b1       	in	r24, 0x0b	; 11
+		PORTA <<= 1;	
+  cc:	82 b1       	in	r24, 0x02	; 2
   ce:	88 0f       	add	r24, r24
-  d0:	8b b9       	out	0x0b, r24	; 11
+  d0:	82 b9       	out	0x02, r24	; 2
   d2:	03 c0       	rjmp	.+6      	; 0xda <night_rider_update+0x16>
-  d4:	8b b1       	in	r24, 0x0b	; 11
+	}else{
+		PORTA >>= 1;	
+  d4:	82 b1       	in	r24, 0x02	; 2
   d6:	86 95       	lsr	r24
-  d8:	8b b9       	out	0x0b, r24	; 11
+  d8:	82 b9       	out	0x02, r24	; 2
+	}
+	
+	current_LED++;
+	current_LED %= 10;
   da:	90 91 00 01 	lds	r25, 0x0100	; 0x800100 <_edata>
   de:	9f 5f       	subi	r25, 0xFF	; 255
   e0:	8d ec       	ldi	r24, 0xCD	; 205

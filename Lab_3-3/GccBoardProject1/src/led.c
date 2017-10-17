@@ -10,7 +10,7 @@
 
 extern void led_init(){
 	DDRA = 0b11111111; /* Sets all pins on Port D to output */
-	PORTA = 0x07; /* initialize port to high – turn on LEDs */
+	PORTA = 0x0; /* initialize port to high – turn on LEDs */
 }
 
 extern void night_rider_update(){

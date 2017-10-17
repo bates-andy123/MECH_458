@@ -11,6 +11,7 @@
 
 extern void mTimerConfig()
 {
+	/* Insert system clock initialization code here (sysclk_init()). */
 	TCCR1B |= _BV(CS10);
 }
 

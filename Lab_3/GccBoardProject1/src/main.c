@@ -45,7 +45,8 @@ int main()
 
 	rtnLink = NULL;
 	newLink = NULL;
-
+	
+	
 	setup(&head, &tail);
 	while(1)
 	{

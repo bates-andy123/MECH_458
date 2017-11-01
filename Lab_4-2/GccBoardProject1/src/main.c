@@ -19,6 +19,7 @@
 /* include libraries */
 #include <stdlib.h>
 #include <avr/io.h>
+#include <avr/interrupt.h> 
 #include "LinkedQueue.h" 	/* This is the attached header file, which cleans things up */
 							/* Make sure you read it!!! */
 #include "Switches.h"
@@ -42,14 +43,14 @@ int main()
 	init_stepper();
 	init_pwm();
 	init_adc();
-	
+	sei();	
 	
 	adc_start_conv();
+	uint8_t i =0;
 	while(1){
 		
-		
-		mTimer(10);
-		OCR0A++;
+		i++;
+		set_dc_motor_speed(read_ADC());
 		//write_to_led_display(OCR0A);
 	}
 
@@ -103,8 +104,6 @@ int main()
 
 ISR(ADC_vect)
 {
-	ADC_result = ADCH;
-	ADC_result_change_flag = true;
-	PORTA ^= 0x20;
+	ADC_interrupt();
 }
 

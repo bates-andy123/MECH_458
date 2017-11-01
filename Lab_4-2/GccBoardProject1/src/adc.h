@@ -22,6 +22,6 @@ extern uint8_t read_ADC();
 
 extern bool peak_for_adc_change();
 
-
+extern void inline ADC_interrupt();
 
 #endif /* ADC_H_ */

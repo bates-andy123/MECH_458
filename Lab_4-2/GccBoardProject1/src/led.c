@@ -6,11 +6,16 @@
  */ 
 
 #include <asf.h>
+#include "led.h"
 
 
 extern void init_led(){
 	DDRA = 0b11111111; /* Sets all pins on Port D to output */
-	PORTA = 0x0; /* initialize port to high – turn on LEDs */
+	PORTA = 0x0; /* initialize port to low – turn on LEDs */
+}
+
+extern inline void write_to_led_display(uint8_t value){
+	PORTA = value;
 }
 
 extern void night_rider_update(){
@@ -24,4 +29,8 @@ extern void night_rider_update(){
 	
 	current_LED++;
 	current_LED %= 10;
+}
+
+extern void status_leds(Status_LED_Position pos, Status_LED_Colour colour){
+		
 }

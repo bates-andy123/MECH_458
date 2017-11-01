@@ -204,6 +204,12 @@
     <Folder Include="src\config\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\adc.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\adc.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\led.c">
       <SubType>compile</SubType>
     </Compile>
@@ -223,6 +229,12 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\mtimer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\pwm.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\pwm.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\stepper.c">

@@ -50,9 +50,11 @@ SUBDIRS :=  \
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../src/adc.c \
 ../src/led.c \
 ../src/LinkedQueue.c \
 ../src/mtimer.c \
+../src/pwm.c \
 ../src/stepper.c \
 ../src/Switches.c \
 ../src/ASF/common/boards/user_board/init.c \
@@ -66,36 +68,44 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+src/adc.o \
 src/led.o \
 src/LinkedQueue.o \
 src/mtimer.o \
+src/pwm.o \
 src/stepper.o \
 src/Switches.o \
 src/ASF/common/boards/user_board/init.o \
 src/main.o
 
 OBJS_AS_ARGS +=  \
+src/adc.o \
 src/led.o \
 src/LinkedQueue.o \
 src/mtimer.o \
+src/pwm.o \
 src/stepper.o \
 src/Switches.o \
 src/ASF/common/boards/user_board/init.o \
 src/main.o
 
 C_DEPS +=  \
+src/adc.d \
 src/led.d \
 src/LinkedQueue.d \
 src/mtimer.d \
+src/pwm.d \
 src/stepper.d \
 src/Switches.d \
 src/ASF/common/boards/user_board/init.d \
 src/main.d
 
 C_DEPS_AS_ARGS +=  \
+src/adc.d \
 src/led.d \
 src/LinkedQueue.d \
 src/mtimer.d \
+src/pwm.d \
 src/stepper.d \
 src/Switches.d \
 src/ASF/common/boards/user_board/init.d \
@@ -115,6 +125,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

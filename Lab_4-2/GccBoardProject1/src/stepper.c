@@ -18,12 +18,14 @@ static steps_lookup[4] = {
 
 static inline drive_stepper(stepper_steps current_step)
 {
-	PORTA = steps_lookup[current_step];
+	PORTA = current_step;
+	PORTD = steps_lookup[current_step];
 }
 
 extern inline void init_stepper()
 {
 	DDRA = 0xFF; /* Sets all pins on Port F to output */
+	DDRD = 0xFF; /* Sets all pins on Port F to output */
 }
 
 extern void step(stepper_direction dir)
@@ -33,7 +35,7 @@ extern void step(stepper_direction dir)
 	if(dir == Clock_Wise){
 		current_step = ((current_step + 1) % amount_of_steps);
 	}else{
-		if(current_step = step_1)
+		if(current_step == step_1)
 			current_step = step_4;
 		else
 			current_step = current_step - 1;

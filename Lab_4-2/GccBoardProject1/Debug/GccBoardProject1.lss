@@ -3,33 +3,33 @@ GccBoardProject1.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  0000028e  2**0
+  0 .data         00000000  00800100  00800100  000002a2  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         0000021a  00000000  00000000  00000074  2**1
+  1 .text         0000022e  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .bss          00000002  00800100  00800100  0000028e  2**0
+  2 .bss          00000002  00800100  00800100  000002a2  2**0
                   ALLOC
-  3 .comment      00000030  00000000  00000000  0000028e  2**0
+  3 .comment      00000030  00000000  00000000  000002a2  2**0
                   CONTENTS, READONLY
-  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002c0  2**2
+  4 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  000002d4  2**2
                   CONTENTS, READONLY
-  5 .debug_aranges 00000110  00000000  00000000  00000300  2**0
+  5 .debug_aranges 000000f0  00000000  00000000  00000314  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   000012aa  00000000  00000000  00000410  2**0
+  6 .debug_info   000011b5  00000000  00000000  00000404  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00000f72  00000000  00000000  000016ba  2**0
+  7 .debug_abbrev 00000e79  00000000  00000000  000015b9  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   000015fb  00000000  00000000  0000262c  2**0
+  8 .debug_line   0000126b  00000000  00000000  00002432  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  000001c0  00000000  00000000  00003c28  2**2
+  9 .debug_frame  000001a8  00000000  00000000  000036a0  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00011bd7  00000000  00000000  00003de8  2**0
+ 10 .debug_str    00011b77  00000000  00000000  00003848  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    00000170  00000000  00000000  000159bf  2**0
+ 11 .debug_loc    00000170  00000000  00000000  000153bf  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 000000b0  00000000  00000000  00015b2f  2**0
+ 12 .debug_ranges 000000a0  00000000  00000000  0001552f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  00004439  00000000  00000000  00015bdf  2**0
+ 13 .debug_macro  000042e6  00000000  00000000  000155cf  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -93,7 +93,7 @@ Disassembly of section .text:
   6e:	00 00       	nop
   70:	30 c0       	rjmp	.+96     	; 0xd2 <__bad_interrupt>
   72:	00 00       	nop
-  74:	a9 c0       	rjmp	.+338    	; 0x1c8 <__vector_29>
+  74:	b3 c0       	rjmp	.+358    	; 0x1dc <__vector_29>
   76:	00 00       	nop
   78:	2c c0       	rjmp	.+88     	; 0xd2 <__bad_interrupt>
   7a:	00 00       	nop
@@ -124,7 +124,7 @@ Disassembly of section .text:
   a4:	11 e0       	ldi	r17, 0x01	; 1
   a6:	a0 e0       	ldi	r26, 0x00	; 0
   a8:	b1 e0       	ldi	r27, 0x01	; 1
-  aa:	ea e1       	ldi	r30, 0x1A	; 26
+  aa:	ee e2       	ldi	r30, 0x2E	; 46
   ac:	f2 e0       	ldi	r31, 0x02	; 2
   ae:	00 e0       	ldi	r16, 0x00	; 0
   b0:	0b bf       	out	0x3b, r16	; 59
@@ -148,265 +148,326 @@ Disassembly of section .text:
   c8:	a2 30       	cpi	r26, 0x02	; 2
   ca:	b2 07       	cpc	r27, r18
   cc:	e1 f7       	brne	.-8      	; 0xc6 <.do_clear_bss_loop>
-  ce:	72 d0       	rcall	.+228    	; 0x1b4 <main>
-  d0:	a2 c0       	rjmp	.+324    	; 0x216 <_exit>
+  ce:	64 d0       	rcall	.+200    	; 0x198 <main>
+  d0:	ac c0       	rjmp	.+344    	; 0x22a <_exit>
 
 000000d2 <__bad_interrupt>:
   d2:	96 cf       	rjmp	.-212    	; 0x0 <__vectors>
 
 000000d4 <init_adc>:
-
-uint8_t ADC_result;
-bool ADC_result_change_flag;
-
-extern void init_adc(){
-	ADMUX = (1<< REFS0)|(1<<MUX0)|(1<<ADLAR);			// Left adjust, and use VCC as top reference
-  d4:	81 e6       	ldi	r24, 0x61	; 97
-  d6:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7e007c>
-	ADCSRA=(1<<ADEN)|(1<<ADIE);							//Set the values of the ADC Enable and ADC Interrupt Enable bits to 1
-  da:	88 e8       	ldi	r24, 0x88	; 136
-  dc:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7e007a>
-	DIDR0 = (1<<ADC1D);									//Turns off the digital input buffer for ADC1 on PF1
-  e0:	82 e0       	ldi	r24, 0x02	; 2
-  e2:	80 93 7e 00 	sts	0x007E, r24	; 0x80007e <__TEXT_REGION_LENGTH__+0x7e007e>
-	
-	PORTA ^= 0x01;
-  e6:	92 b1       	in	r25, 0x02	; 2
-  e8:	81 e0       	ldi	r24, 0x01	; 1
-  ea:	89 27       	eor	r24, r25
-  ec:	82 b9       	out	0x02, r24	; 2
-	
-	ADC_result = 0;
-  ee:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
-	ADC_result_change_flag = false;
-  f2:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <ADC_result_change_flag>
-  f6:	08 95       	ret
-
-000000f8 <adc_start_conv>:
-}
-
-extern inline void adc_start_conv(){
-	// initialize the ADC, start one conversion at the beginning ==========
-	ADCSRA |= _BV(ADSC);
-  f8:	ea e7       	ldi	r30, 0x7A	; 122
-  fa:	f0 e0       	ldi	r31, 0x00	; 0
-  fc:	80 81       	ld	r24, Z
-  fe:	80 64       	ori	r24, 0x40	; 64
- 100:	80 83       	st	Z, r24
-	PORTA ^= 0x02;
- 102:	92 b1       	in	r25, 0x02	; 2
- 104:	82 e0       	ldi	r24, 0x02	; 2
- 106:	89 27       	eor	r24, r25
- 108:	82 b9       	out	0x02, r24	; 2
- 10a:	08 95       	ret
-
-0000010c <read_ADC>:
+	//PORTA ^= 0x20;
 }
 
 extern uint8_t read_ADC(){
 	return ADC_result;
-	//PORTA ^= 0x10; 
 }
- 10c:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_end>
- 110:	08 95       	ret
+  d4:	81 e6       	ldi	r24, 0x61	; 97
+  d6:	80 93 7c 00 	sts	0x007C, r24	; 0x80007c <__TEXT_REGION_LENGTH__+0x7e007c>
+  da:	88 e8       	ldi	r24, 0x88	; 136
+  dc:	80 93 7a 00 	sts	0x007A, r24	; 0x80007a <__TEXT_REGION_LENGTH__+0x7e007a>
+  e0:	82 e0       	ldi	r24, 0x02	; 2
+  e2:	80 93 7e 00 	sts	0x007E, r24	; 0x80007e <__TEXT_REGION_LENGTH__+0x7e007e>
+  e6:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_end>
+  ea:	10 92 01 01 	sts	0x0101, r1	; 0x800101 <ADC_result_change_flag>
+  ee:	08 95       	ret
 
-00000112 <ADC_interrupt>:
+000000f0 <adc_start_conv>:
+  f0:	ea e7       	ldi	r30, 0x7A	; 122
+  f2:	f0 e0       	ldi	r31, 0x00	; 0
+  f4:	80 81       	ld	r24, Z
+  f6:	80 64       	ori	r24, 0x40	; 64
+  f8:	80 83       	st	Z, r24
+  fa:	08 95       	ret
 
-extern void inline ADC_interrupt(){
+000000fc <ADC_interrupt>:
+
+extern void ADC_interrupt(){
+  fc:	cf 93       	push	r28
+  fe:	df 93       	push	r29
 	ADC_result = ADCH;
- 112:	e9 e7       	ldi	r30, 0x79	; 121
- 114:	f0 e0       	ldi	r31, 0x00	; 0
- 116:	80 81       	ld	r24, Z
- 118:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
-	ADC_result_change_flag = false;
-}
-
-extern inline void adc_start_conv(){
-	// initialize the ADC, start one conversion at the beginning ==========
-	ADCSRA |= _BV(ADSC);
- 11c:	aa e7       	ldi	r26, 0x7A	; 122
- 11e:	b0 e0       	ldi	r27, 0x00	; 0
- 120:	8c 91       	ld	r24, X
- 122:	80 64       	ori	r24, 0x40	; 64
- 124:	8c 93       	st	X, r24
-	PORTA ^= 0x02;
- 126:	92 b1       	in	r25, 0x02	; 2
- 128:	82 e0       	ldi	r24, 0x02	; 2
- 12a:	89 27       	eor	r24, r25
- 12c:	82 b9       	out	0x02, r24	; 2
-
-extern void inline ADC_interrupt(){
-	ADC_result = ADCH;
+ 100:	c9 e7       	ldi	r28, 0x79	; 121
+ 102:	d0 e0       	ldi	r29, 0x00	; 0
+ 104:	88 81       	ld	r24, Y
+ 106:	80 93 00 01 	sts	0x0100, r24	; 0x800100 <__data_end>
 	adc_start_conv();
-	//PORTA ^= 0x40;
+	//mTimer(5);
 	PORTA = ADCH;
- 12e:	80 81       	ld	r24, Z
- 130:	82 b9       	out	0x02, r24	; 2
-	mTimer(1000);
- 132:	88 ee       	ldi	r24, 0xE8	; 232
- 134:	93 e0       	ldi	r25, 0x03	; 3
- 136:	0b c0       	rjmp	.+22     	; 0x14e <mTimer>
- 138:	08 95       	ret
+ 10a:	f2 df       	rcall	.-28     	; 0xf0 <adc_start_conv>
+ 10c:	88 81       	ld	r24, Y
+	OCR0A=ADCH;
+ 10e:	82 b9       	out	0x02, r24	; 2
+ 110:	88 81       	ld	r24, Y
+	
+ 112:	87 bd       	out	0x27, r24	; 39
+ 114:	df 91       	pop	r29
+ 116:	cf 91       	pop	r28
+ 118:	08 95       	ret
 
-0000013a <init_led>:
+0000011a <init_led>:
 #include <asf.h>
 #include "led.h"
 
 
 extern void init_led(){
 	DDRA = 0b11111111; /* Sets all pins on Port D to output */
- 13a:	8f ef       	ldi	r24, 0xFF	; 255
- 13c:	81 b9       	out	0x01, r24	; 1
+ 11a:	8f ef       	ldi	r24, 0xFF	; 255
+ 11c:	81 b9       	out	0x01, r24	; 1
 	PORTA = 0x0; /* initialize port to low – turn on LEDs */
- 13e:	12 b8       	out	0x02, r1	; 2
- 140:	08 95       	ret
+ 11e:	12 b8       	out	0x02, r1	; 2
+ 120:	08 95       	ret
 
-00000142 <mTimerConfig>:
- 142:	e1 e8       	ldi	r30, 0x81	; 129
- 144:	f0 e0       	ldi	r31, 0x00	; 0
- 146:	80 81       	ld	r24, Z
- 148:	81 60       	ori	r24, 0x01	; 1
- 14a:	80 83       	st	Z, r24
- 14c:	08 95       	ret
+00000122 <mTimerConfig>:
+#include "mtimer.h"
 
-0000014e <mTimer>:
- 14e:	ac 01       	movw	r20, r24
- 150:	e1 e8       	ldi	r30, 0x81	; 129
- 152:	f0 e0       	ldi	r31, 0x00	; 0
- 154:	90 81       	ld	r25, Z
- 156:	98 60       	ori	r25, 0x08	; 8
- 158:	90 83       	st	Z, r25
- 15a:	88 ee       	ldi	r24, 0xE8	; 232
- 15c:	93 e0       	ldi	r25, 0x03	; 3
- 15e:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
- 162:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
- 166:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
- 16a:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
- 16e:	ef e6       	ldi	r30, 0x6F	; 111
- 170:	f0 e0       	ldi	r31, 0x00	; 0
- 172:	90 81       	ld	r25, Z
- 174:	92 60       	ori	r25, 0x02	; 2
- 176:	90 83       	st	Z, r25
- 178:	b1 9a       	sbi	0x16, 1	; 22
- 17a:	20 e0       	ldi	r18, 0x00	; 0
- 17c:	30 e0       	ldi	r19, 0x00	; 0
- 17e:	05 c0       	rjmp	.+10     	; 0x18a <mTimer+0x3c>
- 180:	b1 9b       	sbis	0x16, 1	; 22
- 182:	fe cf       	rjmp	.-4      	; 0x180 <mTimer+0x32>
- 184:	b1 9a       	sbi	0x16, 1	; 22
- 186:	2f 5f       	subi	r18, 0xFF	; 255
- 188:	3f 4f       	sbci	r19, 0xFF	; 255
- 18a:	24 17       	cp	r18, r20
- 18c:	35 07       	cpc	r19, r21
- 18e:	1c f4       	brge	.+6      	; 0x196 <mTimer+0x48>
- 190:	b1 9b       	sbis	0x16, 1	; 22
- 192:	f6 cf       	rjmp	.-20     	; 0x180 <mTimer+0x32>
- 194:	f7 cf       	rjmp	.-18     	; 0x184 <mTimer+0x36>
- 196:	08 95       	ret
+extern void mTimerConfig()
+{
+	/* Insert system clock initialization code here (sysclk_init()). */
+	TCCR1B |= _BV(CS10);
+ 122:	e1 e8       	ldi	r30, 0x81	; 129
+ 124:	f0 e0       	ldi	r31, 0x00	; 0
+ 126:	80 81       	ld	r24, Z
+ 128:	81 60       	ori	r24, 0x01	; 1
+ 12a:	80 83       	st	Z, r24
+ 12c:	08 95       	ret
 
-00000198 <init_pwm>:
+0000012e <mTimer>:
+}
 
-#include "pwm.h"
-
-extern void init_pwm(){
-	//Turn on B7 to output mode
-	DDRB |= 0x80; 
- 198:	27 9a       	sbi	0x04, 7	; 4
+extern void mTimer(int count)
+{
+ 12e:	ac 01       	movw	r20, r24
+	int i = 0;
 	
-	TCCR0A =(1<<COM0A1) | (1<<WGM01) | (1<<WGM00);	//Set timer counter compare register to Fast PWM
- 19a:	83 e8       	ldi	r24, 0x83	; 131
- 19c:	84 bd       	out	0x24, r24	; 36
+	TCCR1B |= _BV(WGM12); /*CTC mode*/
+ 130:	e1 e8       	ldi	r30, 0x81	; 129
+ 132:	f0 e0       	ldi	r31, 0x00	; 0
+ 134:	90 81       	ld	r25, Z
+ 136:	98 60       	ori	r25, 0x08	; 8
+ 138:	90 83       	st	Z, r25
+	
+	OCR1A = 0x03e8; //1000
+ 13a:	88 ee       	ldi	r24, 0xE8	; 232
+ 13c:	93 e0       	ldi	r25, 0x03	; 3
+ 13e:	90 93 89 00 	sts	0x0089, r25	; 0x800089 <__TEXT_REGION_LENGTH__+0x7e0089>
+ 142:	80 93 88 00 	sts	0x0088, r24	; 0x800088 <__TEXT_REGION_LENGTH__+0x7e0088>
+	
+	TCNT1 = 0x0000;
+ 146:	10 92 85 00 	sts	0x0085, r1	; 0x800085 <__TEXT_REGION_LENGTH__+0x7e0085>
+ 14a:	10 92 84 00 	sts	0x0084, r1	; 0x800084 <__TEXT_REGION_LENGTH__+0x7e0084>
+	
+	//TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+ 14e:	b1 9a       	sbi	0x16, 1	; 22
+	TCCR1B |= _BV(CS10);
+}
 
-	TCCR0B = (1<<CS01);
- 19e:	82 e0       	ldi	r24, 0x02	; 2
- 1a0:	85 bd       	out	0x25, r24	; 37
-	OCR0A = 120;
- 1a2:	88 e7       	ldi	r24, 0x78	; 120
- 1a4:	87 bd       	out	0x27, r24	; 39
- 1a6:	08 95       	ret
+extern void mTimer(int count)
+{
+	int i = 0;
+ 150:	20 e0       	ldi	r18, 0x00	; 0
+ 152:	30 e0       	ldi	r19, 0x00	; 0
+	
+	//TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+	
+	while (i < count)
+ 154:	05 c0       	rjmp	.+10     	; 0x160 <mTimer+0x32>
+	{
+		if ((TIFR1 & 0x02) == 0x02)
+ 156:	b1 9b       	sbis	0x16, 1	; 22
+ 158:	fe cf       	rjmp	.-4      	; 0x156 <mTimer+0x28>
+		{
+			TIFR1 |= _BV(OCF1A);
+ 15a:	b1 9a       	sbi	0x16, 1	; 22
+			i++;
+ 15c:	2f 5f       	subi	r18, 0xFF	; 255
+ 15e:	3f 4f       	sbci	r19, 0xFF	; 255
+	
+	//TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+	
+	while (i < count)
+ 160:	24 17       	cp	r18, r20
+ 162:	35 07       	cpc	r19, r21
+ 164:	1c f4       	brge	.+6      	; 0x16c <mTimer+0x3e>
+	{
+		if ((TIFR1 & 0x02) == 0x02)
+ 166:	b1 9b       	sbis	0x16, 1	; 22
+ 168:	f6 cf       	rjmp	.-20     	; 0x156 <mTimer+0x28>
+ 16a:	f7 cf       	rjmp	.-18     	; 0x15a <mTimer+0x2c>
+ 16c:	08 95       	ret
 
-000001a8 <set_dc_motor_speed>:
+0000016e <init_pwm>:
+	TCCR0B = (1<<CS01) | (1<<CS00);
+	OCR0A = 220;
 }
 
 extern inline void set_dc_motor_speed(uint8_t speed){
 	OCR0A = speed;
- 1a8:	87 bd       	out	0x27, r24	; 39
- 1aa:	08 95       	ret
+ 16e:	84 b1       	in	r24, 0x04	; 4
+ 170:	8f 68       	ori	r24, 0x8F	; 143
+ 172:	84 b9       	out	0x04, r24	; 4
+ 174:	83 e8       	ldi	r24, 0x83	; 131
+ 176:	84 bd       	out	0x24, r24	; 36
+ 178:	83 e0       	ldi	r24, 0x03	; 3
+ 17a:	85 bd       	out	0x25, r24	; 37
+ 17c:	8c ed       	ldi	r24, 0xDC	; 220
+ 17e:	87 bd       	out	0x27, r24	; 39
+ 180:	08 95       	ret
 
-000001ac <init_stepper>:
-	PORTD = steps_lookup[current_step];
+00000182 <set_motor_setting>:
 }
 
-extern inline void init_stepper()
-{
-	DDRA = 0xFF; /* Sets all pins on Port F to output */
- 1ac:	8f ef       	ldi	r24, 0xFF	; 255
- 1ae:	81 b9       	out	0x01, r24	; 1
-	DDRD = 0xFF; /* Sets all pins on Port F to output */
- 1b0:	8a b9       	out	0x0a, r24	; 10
- 1b2:	08 95       	ret
+extern void set_motor_setting(Motor_Setting setting){
+	//Force all settings to off
+	PORTB &= ~(IA | IB | EA | EB);
+ 182:	95 b1       	in	r25, 0x05	; 5
+ 184:	90 7f       	andi	r25, 0xF0	; 240
+ 186:	95 b9       	out	0x05, r25	; 5
+	
+	if(setting == DC_Motor_Clockwise){
+ 188:	81 30       	cpi	r24, 0x01	; 1
+ 18a:	11 f4       	brne	.+4      	; 0x190 <set_motor_setting+0xe>
+		PORTB |= IB;
+ 18c:	29 9a       	sbi	0x05, 1	; 5
+ 18e:	08 95       	ret
+	}
+	else if (setting == DC_Motor_Counter_Clockwise){
+ 190:	82 30       	cpi	r24, 0x02	; 2
+ 192:	09 f4       	brne	.+2      	; 0x196 <set_motor_setting+0x14>
+		PORTB |= IA;
+ 194:	2a 9a       	sbi	0x05, 2	; 5
+ 196:	08 95       	ret
 
-000001b4 <main>:
-
-/* main routine */
-int main()
-{	
+00000198 <main>:
+	cli();
 	mTimerConfig();
 	init_led();
- 1b4:	c6 df       	rcall	.-116    	; 0x142 <mTimerConfig>
- 1b6:	c1 df       	rcall	.-126    	; 0x13a <init_led>
- 1b8:	f9 df       	rcall	.-14     	; 0x1ac <init_stepper>
- 1ba:	ee df       	rcall	.-36     	; 0x198 <init_pwm>
- 1bc:	8b df       	rcall	.-234    	; 0xd4 <init_adc>
- 1be:	78 94       	sei
- 1c0:	9b df       	rcall	.-202    	; 0xf8 <adc_start_conv>
- 1c2:	a4 df       	rcall	.-184    	; 0x10c <read_ADC>
- 1c4:	f1 df       	rcall	.-30     	; 0x1a8 <set_dc_motor_speed>
- 1c6:	fd cf       	rjmp	.-6      	; 0x1c2 <main+0xe>
 
-000001c8 <__vector_29>:
- 1c8:	1f 92       	push	r1
- 1ca:	0f 92       	push	r0
- 1cc:	0f b6       	in	r0, 0x3f	; 63
- 1ce:	0f 92       	push	r0
- 1d0:	11 24       	eor	r1, r1
- 1d2:	0b b6       	in	r0, 0x3b	; 59
- 1d4:	0f 92       	push	r0
- 1d6:	2f 93       	push	r18
- 1d8:	3f 93       	push	r19
- 1da:	4f 93       	push	r20
- 1dc:	5f 93       	push	r21
- 1de:	6f 93       	push	r22
- 1e0:	7f 93       	push	r23
- 1e2:	8f 93       	push	r24
- 1e4:	9f 93       	push	r25
- 1e6:	af 93       	push	r26
- 1e8:	bf 93       	push	r27
- 1ea:	ef 93       	push	r30
- 1ec:	ff 93       	push	r31
- 1ee:	91 df       	rcall	.-222    	; 0x112 <ADC_interrupt>
- 1f0:	ff 91       	pop	r31
- 1f2:	ef 91       	pop	r30
- 1f4:	bf 91       	pop	r27
- 1f6:	af 91       	pop	r26
- 1f8:	9f 91       	pop	r25
- 1fa:	8f 91       	pop	r24
- 1fc:	7f 91       	pop	r23
- 1fe:	6f 91       	pop	r22
- 200:	5f 91       	pop	r21
- 202:	4f 91       	pop	r20
- 204:	3f 91       	pop	r19
- 206:	2f 91       	pop	r18
- 208:	0f 90       	pop	r0
- 20a:	0b be       	out	0x3b, r0	; 59
- 20c:	0f 90       	pop	r0
- 20e:	0f be       	out	0x3f, r0	; 63
- 210:	0f 90       	pop	r0
- 212:	1f 90       	pop	r1
- 214:	18 95       	reti
+	//init_stepper();
+	init_pwm();
+ 198:	f8 94       	cli
+	init_adc();
+ 19a:	c3 df       	rcall	.-122    	; 0x122 <mTimerConfig>
+	sei();	
+ 19c:	be df       	rcall	.-132    	; 0x11a <init_led>
+	
+	adc_start_conv();
+ 19e:	e7 df       	rcall	.-50     	; 0x16e <init_pwm>
+ 1a0:	99 df       	rcall	.-206    	; 0xd4 <init_adc>
+	Motor_Setting current_direction = DC_Motor_Counter_Clockwise;
+	set_motor_setting(current_direction);
+ 1a2:	78 94       	sei
+ 1a4:	a5 df       	rcall	.-182    	; 0xf0 <adc_start_conv>
+ 1a6:	82 e0       	ldi	r24, 0x02	; 2
+	DDRC = 0;
+ 1a8:	ec df       	rcall	.-40     	; 0x182 <set_motor_setting>
+			mTimer(20);
+			
+			if(current_direction == DC_Motor_Clockwise){
+				current_direction = DC_Motor_Counter_Clockwise;
+			}else{
+				current_direction = DC_Motor_Clockwise;
+ 1aa:	17 b8       	out	0x07, r1	; 7
+	adc_start_conv();
+	Motor_Setting current_direction = DC_Motor_Counter_Clockwise;
+	set_motor_setting(current_direction);
+	DDRC = 0;
+	while(1){
+		if( (PINC & 0x01) > 0 ){
+ 1ac:	c2 e0       	ldi	r28, 0x02	; 2
+ 1ae:	12 e0       	ldi	r17, 0x02	; 2
+			mTimer(20);
+ 1b0:	d1 e0       	ldi	r29, 0x01	; 1
+ 1b2:	30 9b       	sbis	0x06, 0	; 6
+ 1b4:	0f c0       	rjmp	.+30     	; 0x1d4 <main+0x3c>
+			
+			if(current_direction == DC_Motor_Clockwise){
+ 1b6:	84 e1       	ldi	r24, 0x14	; 20
+ 1b8:	90 e0       	ldi	r25, 0x00	; 0
+				current_direction = DC_Motor_Counter_Clockwise;
+			}else{
+				current_direction = DC_Motor_Clockwise;
+ 1ba:	b9 df       	rcall	.-142    	; 0x12e <mTimer>
+			}
+			set_motor_setting(current_direction);
+ 1bc:	c1 30       	cpi	r28, 0x01	; 1
+ 1be:	11 f0       	breq	.+4      	; 0x1c4 <main+0x2c>
+			while( (PINC & 0x01) > 0);
+ 1c0:	cd 2f       	mov	r28, r29
+ 1c2:	01 c0       	rjmp	.+2      	; 0x1c6 <main+0x2e>
+			mTimer(20);
+ 1c4:	c1 2f       	mov	r28, r17
+ 1c6:	8c 2f       	mov	r24, r28
+ 1c8:	dc df       	rcall	.-72     	; 0x182 <set_motor_setting>
+ 1ca:	30 99       	sbic	0x06, 0	; 6
+		}
+		//set_dc_motor_speed(read_ADC());
+		mTimer(15);
+ 1cc:	fe cf       	rjmp	.-4      	; 0x1ca <main+0x32>
+ 1ce:	84 e1       	ldi	r24, 0x14	; 20
+ 1d0:	90 e0       	ldi	r25, 0x00	; 0
+ 1d2:	ad df       	rcall	.-166    	; 0x12e <mTimer>
+	}
+ 1d4:	8f e0       	ldi	r24, 0x0F	; 15
+ 1d6:	90 e0       	ldi	r25, 0x00	; 0
+ 1d8:	aa df       	rcall	.-172    	; 0x12e <mTimer>
+ 1da:	eb cf       	rjmp	.-42     	; 0x1b2 <main+0x1a>
 
-00000216 <_exit>:
- 216:	f8 94       	cli
+000001dc <__vector_29>:
+/***************************** SUBROUTINES ********************************************/
+/**************************************************************************************/
 
-00000218 <__stop_program>:
- 218:	ff cf       	rjmp	.-2      	; 0x218 <__stop_program>
+
+ISR(ADC_vect)
+{
+ 1dc:	1f 92       	push	r1
+ 1de:	0f 92       	push	r0
+ 1e0:	0f b6       	in	r0, 0x3f	; 63
+ 1e2:	0f 92       	push	r0
+ 1e4:	11 24       	eor	r1, r1
+ 1e6:	0b b6       	in	r0, 0x3b	; 59
+ 1e8:	0f 92       	push	r0
+ 1ea:	2f 93       	push	r18
+ 1ec:	3f 93       	push	r19
+ 1ee:	4f 93       	push	r20
+ 1f0:	5f 93       	push	r21
+ 1f2:	6f 93       	push	r22
+ 1f4:	7f 93       	push	r23
+ 1f6:	8f 93       	push	r24
+ 1f8:	9f 93       	push	r25
+ 1fa:	af 93       	push	r26
+ 1fc:	bf 93       	push	r27
+ 1fe:	ef 93       	push	r30
+	ADC_interrupt();
+ 200:	ff 93       	push	r31
+}
+ 202:	7c df       	rcall	.-264    	; 0xfc <ADC_interrupt>
+ 204:	ff 91       	pop	r31
+ 206:	ef 91       	pop	r30
+ 208:	bf 91       	pop	r27
+ 20a:	af 91       	pop	r26
+ 20c:	9f 91       	pop	r25
+ 20e:	8f 91       	pop	r24
+ 210:	7f 91       	pop	r23
+ 212:	6f 91       	pop	r22
+ 214:	5f 91       	pop	r21
+ 216:	4f 91       	pop	r20
+ 218:	3f 91       	pop	r19
+ 21a:	2f 91       	pop	r18
+ 21c:	0f 90       	pop	r0
+ 21e:	0b be       	out	0x3b, r0	; 59
+ 220:	0f 90       	pop	r0
+ 222:	0f be       	out	0x3f, r0	; 63
+ 224:	0f 90       	pop	r0
+ 226:	1f 90       	pop	r1
+ 228:	18 95       	reti
+
+0000022a <_exit>:
+ 22a:	f8 94       	cli
+
+0000022c <__stop_program>:
+ 22c:	ff cf       	rjmp	.-2      	; 0x22c <__stop_program>

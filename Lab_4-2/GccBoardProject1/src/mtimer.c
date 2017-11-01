@@ -25,7 +25,7 @@ extern void mTimer(int count)
 	
 	TCNT1 = 0x0000;
 	
-	TIMSK1 |= 0b00000010;
+	//TIMSK1 |= 0b00000010;
 	
 	TIFR1 |= _BV(OCF1A);
 	

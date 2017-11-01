@@ -38,60 +38,34 @@
 /* main routine */
 int main()
 {	
+	cli();
 	mTimerConfig();
 	init_led();
-	init_stepper();
+
+	//init_stepper();
 	init_pwm();
 	init_adc();
 	sei();	
 	
 	adc_start_conv();
-	uint8_t i =0;
+	Motor_Setting current_direction = DC_Motor_Counter_Clockwise;
+	set_motor_setting(current_direction);
+	DDRC = 0;
 	while(1){
-		
-		i++;
-		set_dc_motor_speed(read_ADC());
-		//write_to_led_display(OCR0A);
-	}
-
-	while(1)
-	{
-		uint8_t i = 0;
-		for(i=0; i<50; i++){
-			step(Clock_Wise);
-			mTimer(STEP_TIME_MS);
+		if( (PINC & 0x01) > 0 ){
+			mTimer(20);
+			
+			if(current_direction == DC_Motor_Clockwise){
+				current_direction = DC_Motor_Counter_Clockwise;
+			}else{
+				current_direction = DC_Motor_Clockwise;
+			}
+			set_motor_setting(current_direction);
+			while( (PINC & 0x01) > 0);
+			mTimer(20);
 		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<17; i++){
-			step(Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<34; i++){
-			step(Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<51; i++){
-			step(Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<17; i++){
-			step(Counter_Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<34; i++){
-			step(Counter_Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		mTimer(TIME_BETWEEN_STEPS);
-		for(i=0; i<51; i++){
-			step(Counter_Clock_Wise);
-			mTimer(STEP_TIME_MS);
-		}
-		while(1);
+		//set_dc_motor_speed(read_ADC());
+		mTimer(15);
 	}
 	
 }/* main */

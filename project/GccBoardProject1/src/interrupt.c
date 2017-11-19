@@ -8,7 +8,13 @@
 #include <avr/io.h>
 
 void init_interrupt(){
-	EICRB |= _BV(ISC51);
+	//EICRA |= _BV(ISC00);
+	EICRA |= _BV(ISC01);
 	
-	EIMSK |= 0b00100000;
+	EICRB |= _BV(ISC51);
+	EICRB |= _BV(ISC41);
+	EICRB |= _BV(ISC61);
+	EICRB |= _BV(ISC71);
+	
+	EIMSK |= 0b11110001;
 }

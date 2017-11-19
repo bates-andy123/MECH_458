@@ -28,12 +28,13 @@
 #include "stepper.h"
 #include "pwm.h"
 #include "adc.h"
-
-#define STEP_TIME_MS	(12)
-#define TIME_BETWEEN_STEPS	(2500)
+#include "interrupt.h"
+#include "main.h"
+#include "Buffer.h"
 
 /* global variables */
 /* Avoid using these */
+
 
 /* main routine */
 int main()
@@ -41,21 +42,32 @@ int main()
 	cli();
 	mTimerConfig();
 	init_led();
-
+	init_interrupt();
 	init_stepper();
 	init_pwm();
 	//init_adc();
+	buf_init();
 	sei();	
 	
 	//write_to_led_display(0xFF);
 	
 	//adc_start_conv();
 	
+	mTimer(200);
+	block_till_stepper_home();
+	
+	mTimer(200);
 	set_motor_setting(DC_Motor_Clockwise);
-	//set_dc_motor_speed(50);
+	set_dc_motor_speed(22);
+	
+	mTimer(200);
 	while(1){
-		step(Clock_Wise);
-		mTimer(STEP_TIME_MS);
+		if(buf_get_first_item_material() == get_current_stepper_material()){
+			
+		}else{
+			go_to_material(buf_get_first_item_material());
+		}
+		mTimer(100);
 	}
 	
 }/* main */
@@ -66,12 +78,32 @@ int main()
 /**************************************************************************************/
 
 
-ISR(INT5_vect){
-	PORTA ^= 0x2;
-}
-
 ISR(ADC_vect)
 {
 	ADC_interrupt();
 }
 
+//First Promixity sensor
+ISR(INT4_vect){
+	buf_new();
+}
+
+//Final Promixity sensor
+ISR(INT6_vect){
+	if(get_current_stepper_material() == buf_get_first_item_material()){
+		
+	}else{
+		stop_pwm();
+	}
+}
+
+//Magnetic sensor
+ISR(INT7_vect){
+	buf_is_magnetic();
+	//stop_pwm();
+	//go_to_material(buf_get_first_item_material());
+}
+
+ISR(INT0_vect){
+	//stop_pwm();
+}

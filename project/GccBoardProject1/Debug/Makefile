@@ -51,6 +51,8 @@ SUBDIRS :=  \
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
 ../src/adc.c \
+../src/Buffer.c \
+../src/interrupt.c \
 ../src/led.c \
 ../src/LinkedQueue.c \
 ../src/mtimer.c \
@@ -69,6 +71,8 @@ ASM_SRCS +=
 
 OBJS +=  \
 src/adc.o \
+src/Buffer.o \
+src/interrupt.o \
 src/led.o \
 src/LinkedQueue.o \
 src/mtimer.o \
@@ -80,6 +84,8 @@ src/main.o
 
 OBJS_AS_ARGS +=  \
 src/adc.o \
+src/Buffer.o \
+src/interrupt.o \
 src/led.o \
 src/LinkedQueue.o \
 src/mtimer.o \
@@ -91,6 +97,8 @@ src/main.o
 
 C_DEPS +=  \
 src/adc.d \
+src/Buffer.d \
+src/interrupt.d \
 src/led.d \
 src/LinkedQueue.d \
 src/mtimer.d \
@@ -102,6 +110,8 @@ src/main.d
 
 C_DEPS_AS_ARGS +=  \
 src/adc.d \
+src/Buffer.d \
+src/interrupt.d \
 src/led.d \
 src/LinkedQueue.d \
 src/mtimer.d \
@@ -125,6 +135,10 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
+
+
 
 
 

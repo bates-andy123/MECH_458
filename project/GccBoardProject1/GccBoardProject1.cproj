@@ -210,6 +210,18 @@
     <Compile Include="src\adc.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="src\Buffer.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\Buffer.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\interrupt.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\interrupt.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="src\led.c">
       <SubType>compile</SubType>
     </Compile>
@@ -223,6 +235,9 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\LinksAndPointers.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="src\main.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="src\mtimer.c">

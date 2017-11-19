@@ -28,6 +28,11 @@ extern inline void set_dc_motor_speed(uint8_t speed){
 	OCR0A = speed;
 }
 
+extern inline void stop_pwm(){
+	set_dc_motor_speed(0);
+	set_motor_setting(Brake_to_VCC);
+}
+
 extern void set_motor_setting(Motor_Setting setting){
 	//Force all settings to off
 	PORTB &= ~(IA | IB | EA | EB);
@@ -37,5 +42,11 @@ extern void set_motor_setting(Motor_Setting setting){
 	}
 	else if (setting == DC_Motor_Counter_Clockwise){
 		PORTB |= IA;
+	}
+	else if(setting = Brake_to_VCC){
+		//do nothing
+	}
+	else if(setting == Brake_to_Ground){
+		PORTB |= (IA | IB);
 	}
 }

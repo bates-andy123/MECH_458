@@ -17,10 +17,10 @@
 
 //Start of local global variables
 static steps_lookup[4] = {
-	0b110000, //1100xx step_1
-	0b000110, //0xx110 step_2
-	0b101000, //1010xx step_3
-	0b000101  //0xx101 step_4
+	0b110110, //0b110000, //1100xx step_1
+	0b101110, //0b000110, //0xx110 step_2
+	0b101101, //0b101000, //1010xx step_3
+	0b110101  //0b000101  //0xx101 step_4
 };
 
 bool home_flag;
@@ -28,13 +28,13 @@ Materials stepper_material_position;
 
 static inline drive_stepper(stepper_steps current_step)
 {
-		PORTD = steps_lookup[current_step];
+		PORTC = steps_lookup[current_step];
 }
 
 extern inline void init_stepper()
 {
 	home_flag = false;
-	DDRD = 0xFF; /* Sets all pins on Port D to output */
+	DDRC = 0xFF; /* Sets all pins on Port D to output */
 }
 
 extern void step(stepper_direction dir)

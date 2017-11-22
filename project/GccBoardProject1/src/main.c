@@ -105,5 +105,5 @@ ISR(INT7_vect){
 }
 
 ISR(INT0_vect){
-	//stop_pwm();
+	PORTA ^= 1;
 }

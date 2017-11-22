@@ -105,5 +105,18 @@ ISR(INT7_vect){
 }
 
 ISR(INT0_vect){
+	//local to this interrupts
+	enum states{
+		entering,
+		leaving
+	};
+		
+	static enum states last_state = leaving;
+	
+	if(last_state == leaving){
+		last_state = entering;
+		adc_start_conv();
+	}
+	
 	PORTA ^= 1;
 }

@@ -1048,7 +1048,7 @@ END GROUP
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x1b5e
+.debug_info     0x00000000     0x1b8c
  *(.debug_info .gnu.linkonce.wi.*)
  .debug_info    0x00000000      0xb70 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/at90usb1287/avr51/crtat90usb1287.o
  .debug_info    0x00000b70      0x102 src/adc.o
@@ -1058,9 +1058,9 @@ END GROUP
  .debug_info    0x0000105c       0xc4 src/mtimer.o
  .debug_info    0x00001120      0x158 src/pwm.o
  .debug_info    0x00001278      0x449 src/stepper.o
- .debug_info    0x000016c1      0x49d src/main.o
+ .debug_info    0x000016c1      0x4cb src/main.o
 
-.debug_abbrev   0x00000000     0x1238
+.debug_abbrev   0x00000000     0x1240
  *(.debug_abbrev)
  .debug_abbrev  0x00000000      0xad2 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/at90usb1287/avr51/crtat90usb1287.o
  .debug_abbrev  0x00000ad2       0x9e src/adc.o
@@ -1070,7 +1070,7 @@ END GROUP
  .debug_abbrev  0x00000d7c       0x88 src/mtimer.o
  .debug_abbrev  0x00000e04      0x115 src/pwm.o
  .debug_abbrev  0x00000f19      0x1ed src/stepper.o
- .debug_abbrev  0x00001106      0x132 src/main.o
+ .debug_abbrev  0x00001106      0x13a src/main.o
 
 .debug_line     0x00000000     0x1e09
  *(.debug_line .debug_line.* .debug_line_end)
@@ -1095,7 +1095,7 @@ END GROUP
  .debug_frame   0x000001b4       0xbc src/stepper.o
  .debug_frame   0x00000270      0x1ac src/main.o
 
-.debug_str      0x00000000    0x12076
+.debug_str      0x00000000    0x12099
  *(.debug_str)
  .debug_str     0x00000000      0x3f7 C:/Program Files (x86)/Atmel/Studio/7.0/Packs/atmel/ATmega_DFP/1.2.132/gcc/dev/at90usb1287/avr51/crtat90usb1287.o
  .debug_str     0x000003f7     0x7933 src/adc.o
@@ -1112,8 +1112,8 @@ END GROUP
                                0x7785 (size before relaxing)
  .debug_str     0x00011e40      0x194 src/stepper.o
                               0x11996 (size before relaxing)
- .debug_str     0x00011fd4       0xa2 src/main.o
-                               0x8370 (size before relaxing)
+ .debug_str     0x00011fd4       0xc5 src/main.o
+                               0x8393 (size before relaxing)
 
 .debug_loc      0x00000000      0x5a0
  *(.debug_loc)

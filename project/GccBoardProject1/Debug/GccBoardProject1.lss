@@ -15,21 +15,21 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY
   5 .debug_aranges 000001c8  00000000  00000000  000006dc  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_info   00001b5e  00000000  00000000  000008a4  2**0
+  6 .debug_info   00001b8c  00000000  00000000  000008a4  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_abbrev 00001238  00000000  00000000  00002402  2**0
+  7 .debug_abbrev 00001240  00000000  00000000  00002430  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_line   00001e09  00000000  00000000  0000363a  2**0
+  8 .debug_line   00001e09  00000000  00000000  00003670  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_frame  0000041c  00000000  00000000  00005444  2**2
+  9 .debug_frame  0000041c  00000000  00000000  0000547c  2**2
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_str    00012076  00000000  00000000  00005860  2**0
+ 10 .debug_str    00012099  00000000  00000000  00005898  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_loc    000005a0  00000000  00000000  000178d6  2**0
+ 11 .debug_loc    000005a0  00000000  00000000  00017931  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_ranges 00000148  00000000  00000000  00017e76  2**0
+ 12 .debug_ranges 00000148  00000000  00000000  00017ed1  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_macro  0000480b  00000000  00000000  00017fbe  2**0
+ 13 .debug_macro  0000480b  00000000  00000000  00018019  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -1075,6 +1075,11 @@ ISR(INT0_vect){
  560:	11 24       	eor	r1, r1
  562:	8f 93       	push	r24
  564:	9f 93       	push	r25
+	
+	if(last_state == leaving){
+		
+	}
+	
 	PORTA ^= 1;
  566:	92 b1       	in	r25, 0x02	; 2
  568:	81 e0       	ldi	r24, 0x01	; 1

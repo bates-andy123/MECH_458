@@ -11,6 +11,7 @@
 
 extern void init_led(){
 	DDRA = 0b11111111; /* Sets all pins on Port D to output */
+	DDRD |= 0xF0; 
 	PORTA = 0x0; /* initialize port to low – turn on LEDs */
 }
 
@@ -32,5 +33,23 @@ extern void night_rider_update(){
 }
 
 extern void status_leds(Status_LED_Position pos, Status_LED_Colour colour){
-		
+		if(pos == top){
+			PORTD &= ~0xC0;
+			if(colour == orange){
+				PORTD |= 0xC0;	
+			}else if(colour == red){
+				PORTD |= 0x80;
+			}else{
+				PORTD |= 0x40;
+			}
+		}else{
+			PORTD &= ~0x30;
+			if(colour == orange){
+				PORTD |= 0x30;
+				}else if(colour == red){
+				PORTD |= 0x10;
+				}else{
+				PORTD |= 0x20;
+			}
+		}
 }

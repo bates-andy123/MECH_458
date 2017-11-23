@@ -45,7 +45,7 @@ int main()
 	init_interrupt();
 	init_stepper();
 	init_pwm();
-	//init_adc();
+	init_adc();
 	buf_init();
 	sei();	
 	
@@ -58,7 +58,9 @@ int main()
 	
 	mTimer(200);
 	set_motor_setting(DC_Motor_Clockwise);
-	set_dc_motor_speed(22);
+	set_dc_motor_speed(15);
+	
+	adc_start_conv();
 	
 	mTimer(200);
 	while(1){
@@ -110,13 +112,17 @@ ISR(INT0_vect){
 		entering,
 		leaving
 	};
-		
+	
+	//At start we can pretend an item just left	
 	static enum states last_state = leaving;
 	
 	if(last_state == leaving){
+		status_leds(top, green);
 		last_state = entering;
-		adc_start_conv();
+	}else{
+		status_leds(top, orange);
+		last_state = leaving;
+		adc_stop_conv();
+		set_first_item(White, Delay_stage);
 	}
-	
-	PORTA ^= 1;
 }

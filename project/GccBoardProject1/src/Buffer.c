@@ -16,6 +16,7 @@ extern void buf_init(){
 	most_recent_pushed_idx = 0;
 	current_push_idx = 0;
 	starting_idx = 0;
+	first_on_belt = 0;
 }
 
 extern void buf_new(){
@@ -33,11 +34,21 @@ extern void buf_new(){
 	}
 }
 
+extern set_first_item(Materials mat, Stage stag){
+	belt[first_on_belt].assumed_material = mat;
+	belt[first_on_belt].last_stage = stag;
+}
+
 extern buf_is_magnetic(){
 	belt[most_recent_pushed_idx].magnetic = true;
 	belt[most_recent_pushed_idx].assumed_material = Steel;
 }
 
 extern inline Materials buf_get_first_item_material(){
-	return belt[starting_idx].assumed_material;
+	return belt[first_on_belt].assumed_material;
+}
+
+extern inline remove_first_item(){
+	belt[first_on_belt].last_stage = Complete;
+	first_on_belt++;
 }

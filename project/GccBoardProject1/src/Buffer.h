@@ -27,6 +27,7 @@ typedef struct buf{
 
 Buf belt[BUFFER_SIZE];
 
+uint8_t first_on_belt;
 uint8_t most_recent_pushed_idx;
 uint8_t current_push_idx;
 uint8_t starting_idx;
@@ -39,5 +40,7 @@ extern void buf_new();
 extern buf_is_magnetic();
 
 extern inline Materials buf_get_first_item_material();
+
+extern set_first_item(Materials mat, Stage stag);
 
 #endif /* BUFFER_H_ */

@@ -10,14 +10,14 @@
 #define LED_H_
 
 typedef enum{
-	green = 0x1,
-	red = 0x2,
+	red = 0x1,
+	green = 0x2,
 	orange = 0x3
 }Status_LED_Colour;
 
 typedef enum{
-	top = 0x10,
-	bottom = 0x40
+	top = 6,
+	bottom = 4
 }Status_LED_Position;
 
 extern void init_led();

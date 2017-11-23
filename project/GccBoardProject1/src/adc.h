@@ -18,7 +18,9 @@ extern void init_adc();
 
 extern void adc_start_conv();
 
-extern uint8_t read_ADC();
+extern void adc_stop_conv();
+
+extern uint16_t read_Max_ADC();
 
 extern void inline ADC_interrupt();
 

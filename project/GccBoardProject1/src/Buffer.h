@@ -43,4 +43,6 @@ extern inline Materials buf_get_first_item_material();
 
 extern set_first_item(Materials mat, Stage stag);
 
+extern inline remove_first_item();
+
 #endif /* BUFFER_H_ */

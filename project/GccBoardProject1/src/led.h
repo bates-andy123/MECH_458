@@ -10,6 +10,7 @@
 #define LED_H_
 
 typedef enum{
+	off = 0x00,
 	red = 0x1,
 	green = 0x2,
 	orange = 0x3

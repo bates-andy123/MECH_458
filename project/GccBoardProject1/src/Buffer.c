@@ -22,7 +22,7 @@ extern void buf_init(){
 extern void buf_new(){
 	if(buf_length <= BUFFER_SIZE){
 		//Save the item to the buffer
-		belt[current_push_idx].assumed_material = amount_of_materials;
+		belt[current_push_idx].assumed_material = Black;
 		belt[current_push_idx].last_stage = Promixity_stage;
 		belt[current_push_idx].magnetic = false;
 		belt[current_push_idx].max_adc = 0;

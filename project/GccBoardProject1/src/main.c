@@ -61,12 +61,18 @@ int main()
 	set_dc_motor_speed(15);
 	
 	adc_start_conv();
-	
+	//PORTA = 0x80;
+	set_first_item(White, Delay_stage);
+
 	mTimer(200);
 	while(1){
+		//PORTA |= (buf_get_first_item_material() == get_current_stepper_material());
+		//PORTA ^= 2;
 		if(buf_get_first_item_material() == get_current_stepper_material()){
-			
+			set_motor_setting(DC_Motor_Clockwise);
+			set_dc_motor_speed(15);
 		}else{
+			//PORTA ^= 0x80;
 			go_to_material(buf_get_first_item_material());
 		}
 		mTimer(100);
@@ -122,7 +128,20 @@ ISR(INT0_vect){
 	}else{
 		status_leds(top, orange);
 		last_state = leaving;
+		
+		PORTA = read_Min_ADC();
+		
+		if(read_Min_ADC() > BLACK_ABOVE_TH_8b){
+			set_first_item(Black, Delay_stage);	
+		}else if(read_Min_ADC() > WHITE_ABOVE_TH_8b){
+			set_first_item(White, Delay_stage);
+		}else if(read_Min_ADC() > STEEL_ABOVE_TH_8b){
+			set_first_item(Steel, Delay_stage);
+		}else{
+			set_first_item(Aluminum, Delay_stage);
+		}
+
+		//stop_pwm();
 		adc_stop_conv();
-		set_first_item(White, Delay_stage);
 	}
 }

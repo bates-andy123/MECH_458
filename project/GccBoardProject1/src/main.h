@@ -11,15 +11,25 @@
 
 #include <stdbool.h>
 
-#define STEP_TIME_MS	(10)
+#define STEP_TIME_MS	(25)
 #define TIME_BETWEEN_STEPS	(2500)
+
+#define BLACK_ABOVE_TH_10b		(929)
+#define BLACK_ABOVE_TH_8b		(BLACK_ABOVE_TH_10b/4)
+
+#define WHITE_ABOVE_TH_10b		(850)
+#define WHITE_ABOVE_TH_8b		(WHITE_ABOVE_TH_10b/4)
+
+#define STEEL_ABOVE_TH_10b		(475)
+#define STEEL_ABOVE_TH_8b		(STEEL_ABOVE_TH_10b/4)
 
 typedef enum
 {
-	Aluminum,
+	Aluminum = 0,
 	White,
 	Steel,
 	Black,
+	Unknown_material,
 	amount_of_materials
 }Materials;
 

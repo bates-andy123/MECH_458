@@ -45,11 +45,11 @@ extern void adc_start_conv(){
 }//*/
 
 extern void adc_stop_conv(){
-	ADC_Min_result = 0xFFFF;
+	ADC_Min_result = 0xFF;
 }
 
 
-extern uint16_t read_Max_ADC(){
+extern uint8_t read_Min_ADC(){
 	return ADC_Min_result;
 }
 
@@ -59,9 +59,8 @@ extern void ADC_interrupt(){
 		ADC_Min_result = ADCH;
 	}
 	adc_start_conv();
-	PORTA = ADC_Min_result;
-	//OCR0A=ADCH;
-	
+	//PORTA = ADC_Min_result;
+	//status_leds(bottom, ADC_Min_result>>6);
 }
 
 /*extern void ADC_interrupt(){

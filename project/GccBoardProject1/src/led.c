@@ -39,8 +39,10 @@ extern void status_leds(Status_LED_Position pos, Status_LED_Colour colour){
 				PORTD |= 0xC0;	
 			}else if(colour == red){
 				PORTD |= 0x80;
-			}else{
+			}else if(colour == green){
 				PORTD |= 0x40;
+			}else{
+				
 			}
 		}else{
 			PORTD &= ~0x30;
@@ -48,8 +50,10 @@ extern void status_leds(Status_LED_Position pos, Status_LED_Colour colour){
 				PORTD |= 0x30;
 				}else if(colour == red){
 				PORTD |= 0x10;
-				}else{
+				}else if(colour = green){
 				PORTD |= 0x20;
-			}
+				}else{
+						
+				}
 		}
 }

@@ -77,7 +77,6 @@ extern void stepper_repeat_steps(uint8_t steps, stepper_direction dir){
 }
 
 extern void go_to_material(Materials mat){
-	
 	if(stepper_material_position == Black){
 		if(mat == Steel){
 			stepper_repeat_steps(STEPS_FOR_90_DEGREES, Counter_Clock_Wise);
@@ -106,9 +105,10 @@ extern void go_to_material(Materials mat){
 	if(stepper_material_position == Aluminum){
 		if(mat == Black)
 			stepper_repeat_steps(STEPS_FOR_90_DEGREES, Counter_Clock_Wise);
-		else if(mat == White)
+		else if(mat == White){
 			stepper_repeat_steps(STEPS_FOR_90_DEGREES, Clock_Wise);
-		else
+			PORTA ^= 0x04;
+		}else
 			stepper_repeat_steps(STEPS_FOR_180_DEGREES, Clock_Wise);
 	}//*/
 	stepper_material_position = mat;

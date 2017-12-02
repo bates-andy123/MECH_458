@@ -5,7 +5,7 @@
  *  Author: abates
  */ 
 
-#include "UART.h"
+#include "usart.h"
 #include <string.h>
 #include "mtimer.h"
 

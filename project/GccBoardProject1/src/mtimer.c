@@ -15,6 +15,12 @@ extern void mTimerConfig()
 	TCCR1B |= _BV(CS10);
 }
 
+extern void timer0_init()
+{
+	TCCR1B |= _BV(CS10);
+	TIMSK0 |= _BV(TOIE1);
+}
+
 extern void mTimer(int count)
 {
 	int i = 0;

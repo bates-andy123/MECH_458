@@ -49,10 +49,11 @@ int main()
 	init_adc();
 	buf_init();
 	usartInit(0xC);
+	
+	//timer0_init();
 	sei();	
 	
 	usartTXs("Booting...\r\n");
-	usartNumTXs(100);
 	
 	mTimer(200);
 	block_till_stepper_home();
@@ -77,6 +78,8 @@ int main()
 			go_to_material(buf_get_first_item_material());
 		}
 		mTimer(100);
+		//usartTXs("Next: ");
+		//buffer_print_first_on_belt();
 	}
 	
 }/* main */
@@ -100,7 +103,7 @@ ISR(INT4_vect){
 //Final Promixity sensor
 ISR(INT6_vect){
 	if(get_current_stepper_material() == buf_get_first_item_material()){
-		
+		remove_first_item();
 	}else{
 		stop_pwm();
 	}
@@ -132,17 +135,27 @@ ISR(INT0_vect){
 		
 		PORTA = read_Min_ADC();
 		
-		if(read_Min_ADC() > BLACK_ABOVE_TH_8b){
-			set_first_item(Black, Delay_stage);	
-		}else if(read_Min_ADC() > WHITE_ABOVE_TH_8b){
-			set_first_item(White, Delay_stage);
-		}else if(read_Min_ADC() > STEEL_ABOVE_TH_8b){
-			set_first_item(Steel, Delay_stage);
+		if(read_Min_ADC() > BLACK_ABOVE_TH_12b){
+			usartTXs("Black ");
+			set_second_prox_sensor_item(Black, Delay_stage);	
+		}else if(read_Min_ADC() > WHITE_ABOVE_TH_12b){
+			usartTXs("White ");
+			set_second_prox_sensor_item(White, Delay_stage);
+		}else if(read_Min_ADC() > STEEL_ABOVE_TH_12b){
+			usartTXs("Steel ");
+			set_second_prox_sensor_item(Steel, Delay_stage);
 		}else{
-			set_first_item(Aluminum, Delay_stage);
+			usartTXs("Alum ");
+			set_second_prox_sensor_item(Aluminum, Delay_stage);
 		}
-
+		usartNumTXs(read_Min_ADC());
 		//stop_pwm();
 		adc_stop_conv();
 	}
+}
+
+ISR(TIMER0_OVF_vect)
+{
+	// keep a track of number of overflows
+	usartTXs("i\r\n");
 }

@@ -12,5 +12,7 @@
 extern void  mTimer(int count);
 extern void mTimerConfig();
 
+extern void timer0_init();
+
 
 #endif /* MTIMER_H_ */

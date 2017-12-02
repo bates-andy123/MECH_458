@@ -11,16 +11,16 @@
 #ifndef ADC_H_
 #define ADC_H_
 
-uint8_t ADC_result;
+uint16_t ADC_result;
 bool ADC_result_change_flag;
 
 extern void init_adc();
 
-extern void adc_start_conv();
+extern inline void adc_start_conv();
 
-extern void adc_stop_conv();
+extern inline void adc_stop_conv();
 
-extern uint8_t read_Min_ADC();
+extern uint16_t read_Min_ADC();
 
 extern void inline ADC_interrupt();
 

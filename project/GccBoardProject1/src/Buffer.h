@@ -30,7 +30,7 @@ Buf belt[BUFFER_SIZE];
 uint8_t first_on_belt;
 uint8_t most_recent_pushed_idx;
 uint8_t current_push_idx;
-uint8_t starting_idx;
+uint8_t most_recent_idx_to_past_second_prox_sensor;
 uint8_t buf_length;
 
 extern void buf_init();
@@ -44,5 +44,9 @@ extern inline Materials buf_get_first_item_material();
 extern set_first_item(Materials mat, Stage stag);
 
 extern inline remove_first_item();
+
+extern set_second_prox_sensor_item(Materials mat, Stage stag);
+
+extern inline buffer_print_first_on_belt();
 
 #endif /* BUFFER_H_ */

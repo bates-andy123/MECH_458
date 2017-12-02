@@ -11,7 +11,7 @@
 
 #include <stdbool.h>
 
-#define STEP_TIME_MS	(25)
+#define STEP_TIME_MS	(15)
 #define TIME_BETWEEN_STEPS	(2500)
 
 #define BLACK_ABOVE_TH_10b		(929)

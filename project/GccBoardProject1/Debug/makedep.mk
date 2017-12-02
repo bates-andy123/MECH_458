@@ -20,6 +20,8 @@ src\stepper.c
 
 src\Switches.c
 
+src\usart.c
+
 src\ASF\common\boards\user_board\init.c
 
 src\main.c

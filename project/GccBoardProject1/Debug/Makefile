@@ -59,6 +59,7 @@ C_SRCS +=  \
 ../src/pwm.c \
 ../src/stepper.c \
 ../src/Switches.c \
+../src/usart.c \
 ../src/ASF/common/boards/user_board/init.c \
 ../src/main.c
 
@@ -79,6 +80,7 @@ src/mtimer.o \
 src/pwm.o \
 src/stepper.o \
 src/Switches.o \
+src/usart.o \
 src/ASF/common/boards/user_board/init.o \
 src/main.o
 
@@ -92,6 +94,7 @@ src/mtimer.o \
 src/pwm.o \
 src/stepper.o \
 src/Switches.o \
+src/usart.o \
 src/ASF/common/boards/user_board/init.o \
 src/main.o
 
@@ -105,6 +108,7 @@ src/mtimer.d \
 src/pwm.d \
 src/stepper.d \
 src/Switches.d \
+src/usart.d \
 src/ASF/common/boards/user_board/init.d \
 src/main.d
 
@@ -118,6 +122,7 @@ src/mtimer.d \
 src/pwm.d \
 src/stepper.d \
 src/Switches.d \
+src/usart.d \
 src/ASF/common/boards/user_board/init.d \
 src/main.d
 
@@ -135,6 +140,8 @@ LINKER_SCRIPT_DEP+=
 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

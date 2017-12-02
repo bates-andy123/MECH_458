@@ -31,6 +31,7 @@
 #include "interrupt.h"
 #include "main.h"
 #include "Buffer.h"
+#include "usart.h"
 
 /* global variables */
 /* Avoid using these */
@@ -47,18 +48,18 @@ int main()
 	init_pwm();
 	init_adc();
 	buf_init();
+	usartInit(0xC);
 	sei();	
 	
-	//write_to_led_display(0xFF);
-	
-	//adc_start_conv();
+	usartTXs("Booting...\r\n");
+	usartNumTXs(100);
 	
 	mTimer(200);
 	block_till_stepper_home();
 	
 	mTimer(200);
 	set_motor_setting(DC_Motor_Clockwise);
-	set_dc_motor_speed(15);
+	set_dc_motor_speed(30);
 	
 	adc_start_conv();
 	//PORTA = 0x80;
@@ -70,7 +71,7 @@ int main()
 		//PORTA ^= 2;
 		if(buf_get_first_item_material() == get_current_stepper_material()){
 			set_motor_setting(DC_Motor_Clockwise);
-			set_dc_motor_speed(15);
+			set_dc_motor_speed(30);
 		}else{
 			//PORTA ^= 0x80;
 			go_to_material(buf_get_first_item_material());

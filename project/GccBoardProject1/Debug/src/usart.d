@@ -1,6 +1,7 @@
-src/main.d src/main.o: ../src/main.c \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
+src/usart.d src/usart.o: ../src/usart.c ../src/UART.h ../src/asf.h \
+ ../src/ASF/common/boards/user_board/user_board.h \
+ ../src/config/conf_board.h ../src/ASF/common/boards/board.h \
+ ../src/ASF/mega/utils/compiler.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\inttypes.h \
@@ -13,26 +14,29 @@ src/main.d src/main.o: ../src/main.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\version.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\fuse.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
- ../src/LinkedQueue.h ../src/Switches.h ../src/Led.h ../src/mtimer.h \
- ../src/stepper.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../src/main.h ../src/pwm.h ../src/adc.h ../src/interrupt.h \
- ../src/Buffer.h \
- c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
- ../src/usart.h ../src/asf.h \
- ../src/ASF/common/boards/user_board/user_board.h \
- ../src/config/conf_board.h ../src/ASF/common/boards/board.h \
- ../src/ASF/mega/utils/compiler.h ../src/ASF/common/utils/parts.h \
- ../src/ASF/common/utils/interrupt.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
+ ../src/ASF/common/utils/parts.h ../src/ASF/common/utils/interrupt.h \
  ../src/ASF/common/utils/interrupt/interrupt_avr8.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../src/ASF/mega/utils/progmem.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../src/ASF/mega/utils/status_codes.h
+ ../src/ASF/mega/utils/status_codes.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h \
+ ../src/mtimer.h
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
+../src/UART.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
+../src/asf.h:
+
+../src/ASF/common/boards/user_board/user_board.h:
+
+../src/config/conf_board.h:
+
+../src/ASF/common/boards/board.h:
+
+../src/ASF/mega/utils/compiler.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -58,43 +62,11 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h:
 
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
-
-../src/LinkedQueue.h:
-
-../src/Switches.h:
-
-../src/Led.h:
-
-../src/mtimer.h:
-
-../src/stepper.h:
-
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h:
 
-../src/main.h:
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
 
-../src/pwm.h:
-
-../src/adc.h:
-
-../src/interrupt.h:
-
-../src/Buffer.h:
-
-c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
-
-../src/usart.h:
-
-../src/asf.h:
-
-../src/ASF/common/boards/user_board/user_board.h:
-
-../src/config/conf_board.h:
-
-../src/ASF/common/boards/board.h:
-
-../src/ASF/mega/utils/compiler.h:
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
 
 ../src/ASF/common/utils/parts.h:
 
@@ -102,8 +74,14 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 
 ../src/ASF/common/utils/interrupt/interrupt_avr8.h:
 
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h:
+
 ../src/ASF/mega/utils/progmem.h:
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
 
 ../src/ASF/mega/utils/status_codes.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:
+
+../src/mtimer.h:

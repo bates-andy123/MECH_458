@@ -22,6 +22,10 @@ extern inline void adc_stop_conv();
 
 extern uint16_t read_Min_ADC();
 
-extern void inline ADC_interrupt();
+extern inline void ADC_interrupt();
+
+extern void ADC_reset_count();
+
+extern uint16_t ADC_return_Count();
 
 #endif /* ADC_H_ */

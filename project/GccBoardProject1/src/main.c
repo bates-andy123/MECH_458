@@ -33,8 +33,20 @@
 #include "Buffer.h"
 #include "usart.h"
 
+enum belt_status{
+	belt_running,
+	belt_stopped	
+};
+
+
+
+#define MOTOR_PWM	(60)
+#define BELT_JOLT_TIME	(21)
 /* global variables */
 /* Avoid using these */
+
+enum belt_status current_belt_status = belt_running;
+enum pause_button_state  pause_state = paused_state_is_running;
 
 
 /* main routine */
@@ -59,27 +71,32 @@ int main()
 	block_till_stepper_home();
 	
 	mTimer(200);
-	set_motor_setting(DC_Motor_Clockwise);
-	set_dc_motor_speed(30);
+	stepper_repeat_steps(8, Counter_Clock_Wise);
+	
+	
+	mTimer(200);
+	start_pwm(MOTOR_PWM);
 	
 	adc_start_conv();
 	//PORTA = 0x80;
-	set_first_item(White, Delay_stage);
 
 	mTimer(200);
 	while(1){
 		//PORTA |= (buf_get_first_item_material() == get_current_stepper_material());
 		//PORTA ^= 2;
 		if(buf_get_first_item_material() == get_current_stepper_material()){
-			set_motor_setting(DC_Motor_Clockwise);
-			set_dc_motor_speed(30);
+			if(current_belt_status == belt_stopped && pause_state == paused_state_is_running){
+				start_pwm(MOTOR_PWM);
+				remove_first_item();
+				current_belt_status = belt_running;
+				start_pwm(250);
+				mTimer(BELT_JOLT_TIME);
+				start_pwm(MOTOR_PWM);
+			}
 		}else{
-			//PORTA ^= 0x80;
 			go_to_material(buf_get_first_item_material());
 		}
-		mTimer(100);
-		//usartTXs("Next: ");
-		//buffer_print_first_on_belt();
+
 	}
 	
 }/* main */
@@ -103,15 +120,17 @@ ISR(INT4_vect){
 //Final Promixity sensor
 ISR(INT6_vect){
 	if(get_current_stepper_material() == buf_get_first_item_material()){
+		mTimer(BELT_JOLT_TIME);
 		remove_first_item();
 	}else{
 		stop_pwm();
+		current_belt_status = belt_stopped;
 	}
 }
 
 //Magnetic sensor
 ISR(INT7_vect){
-	buf_is_magnetic();
+	//buf_is_magnetic();
 	//stop_pwm();
 	//go_to_material(buf_get_first_item_material());
 }
@@ -129,6 +148,7 @@ ISR(INT0_vect){
 	if(last_state == leaving){
 		status_leds(top, green);
 		last_state = entering;
+		ADC_reset_count();
 	}else{
 		status_leds(top, orange);
 		last_state = leaving;
@@ -149,9 +169,23 @@ ISR(INT0_vect){
 			set_second_prox_sensor_item(Aluminum, Delay_stage);
 		}
 		usartNumTXs(read_Min_ADC());
+		usartTXs(" Count ");
+		usartNumTXs(ADC_return_Count());
+		usartTXs("\r\n");
 		//stop_pwm();
 		adc_stop_conv();
 	}
+}
+
+ISR(INT1_vect){
+	pause_state = !pause_state;
+	if(pause_state == paused_state_is_stop){
+		usartTXs("pause\r\n");
+		stop_pwm();
+	}else{
+		start_pwm(MOTOR_PWM);
+	}
+	
 }
 
 ISR(TIMER0_OVF_vect)

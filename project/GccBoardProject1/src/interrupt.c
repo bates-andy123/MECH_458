@@ -9,7 +9,11 @@
 
 void init_interrupt(){
 	//EICRA |= _BV(ISC00);
+	//Any edge causes interrupt on last promixity sensor
 	EICRA |= _BV(ISC00);
+	
+	//Pause button, active low
+	EICRA |= _BV(ISC11) | _BV(ISC10);
 	
 	//Stepper motor at home, active low
 	EICRB |= _BV(ISC51);
@@ -23,5 +27,5 @@ void init_interrupt(){
 	//Magnetic detection sensor, active low
 	EICRB |= _BV(ISC71);
 	
-	EIMSK |= 0b11110001;
+	EIMSK |= 0b11110011;
 }

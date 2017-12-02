@@ -20,5 +20,6 @@ extern void init_pwm();
 extern void set_dc_motor_speed(uint8_t speed);
 extern void set_motor_setting(Motor_Setting setting);
 extern inline void stop_pwm();
+extern inline void start_pwm(uint8_t speed);
 
 #endif /* PWM_H_ */

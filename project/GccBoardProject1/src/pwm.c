@@ -33,6 +33,11 @@ extern inline void stop_pwm(){
 	set_motor_setting(Brake_to_VCC);
 }
 
+extern inline void start_pwm(uint8_t speed){
+	set_motor_setting(DC_Motor_Clockwise);
+	set_dc_motor_speed(speed);
+}
+
 extern void set_motor_setting(Motor_Setting setting){
 	//Force all settings to off
 	PORTB &= ~(IA | IB | EA | EB);

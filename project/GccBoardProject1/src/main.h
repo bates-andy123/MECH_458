@@ -39,9 +39,9 @@
 	
 #elif STATION == 6
 
-	#define BLACK_ABOVE_TH_12b		(874)
+	#define BLACK_ABOVE_TH_12b		(954)
 
-	#define WHITE_ABOVE_TH_12b		(780)
+	#define WHITE_ABOVE_TH_12b		(880)
 
 	#define STEEL_ABOVE_TH_12b		(400)
 
@@ -65,5 +65,10 @@ typedef enum
 	Delay_stage,
 	Complete
 }Stage;
+
+enum pause_button_state{
+	paused_state_is_stop = 0,
+	paused_state_is_running
+};
 
 #endif /* MAIN_H_ */

@@ -11,7 +11,7 @@
 
 extern void init_led(){
 	DDRA = 0b11111111; /* Sets all pins on Port D to output */
-	DDRD |= 0xF0; 
+	DDRD |= 0xE0; 
 	PORTA = 0x0; /* initialize port to low – turn on LEDs */
 }
 

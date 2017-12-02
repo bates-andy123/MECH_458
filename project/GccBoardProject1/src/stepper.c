@@ -72,7 +72,17 @@ extern void block_till_stepper_home(){
 extern void stepper_repeat_steps(uint8_t steps, stepper_direction dir){
 	for(uint8_t i = 0; i < steps; i++){
 		step(dir);
+		if(i <= 4 || i >= (steps-4)){
 		mTimer(STEP_TIME_MS);
+		}else if(i <= 8 || i >= (steps-8)){
+			mTimer((STEP_TIME_MS * 2) / 3);
+		}else if(i <= 12 || i >= (steps-12)){
+			mTimer(STEP_TIME_MS/2);
+		}else if(i <= 16 || i >= (steps-16)){
+			mTimer(STEP_TIME_MS/3);
+		}else{
+			mTimer(STEP_TIME_MS/4);
+		}
 	}
 }
 
@@ -107,7 +117,6 @@ extern void go_to_material(Materials mat){
 			stepper_repeat_steps(STEPS_FOR_90_DEGREES, Counter_Clock_Wise);
 		else if(mat == White){
 			stepper_repeat_steps(STEPS_FOR_90_DEGREES, Clock_Wise);
-			PORTA ^= 0x04;
 		}else
 			stepper_repeat_steps(STEPS_FOR_180_DEGREES, Clock_Wise);
 	}//*/

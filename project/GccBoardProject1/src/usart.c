@@ -51,5 +51,4 @@ extern void usartNumTXs(uint16_t num){
 	usartTX((char)(((num/100)%10) + 48));
 	usartTX((char)(((num/10)%10) + 48));
 	usartTX((char)((num%10) + 48));
-	usartTXs("\r\n");
 }

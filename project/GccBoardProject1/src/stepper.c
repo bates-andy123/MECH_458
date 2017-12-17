@@ -9,11 +9,29 @@
 #include "asf.h"
 #include "main.h"
 #include "mtimer.h"
+#include "usart.h"
+#include "pwm.h"
+#include "Buffer.h"
 #include <stdbool.h>
 
 #define STEPS_PER_DEGREE		(1.8)
 #define STEPS_FOR_90_DEGREES	(50)
 #define STEPS_FOR_180_DEGREES	(100)
+
+uint16_t less_than_5_rev_up[20] = {280, 265, 250, 235, 220, 205, 190, 160, 150, 140, 130, 120, 110, 100, 90, 90, 90, 90, 90, 90};
+uint16_t less_than_5_rev_dw[10] = {90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
+
+uint16_t less_than_10_rev_up[20] = {280, 265, 250, 235, 220, 205, 190, 160, 150, 140, 130, 120, 110, 100, 100, 100, 100, 100, 100, 100};
+uint16_t less_than_10_rev_dw[10] = {100, 120, 150, 180, 210, 240, 270, 300, 330, 360};
+	
+uint16_t less_than_15_rev_up[20] = {320, 300, 280, 260, 240, 220, 200, 180, 160, 140, 130, 120, 110, 110, 110, 110, 110, 110, 110, 110};
+uint16_t less_than_15_rev_dw[10] = {100, 120, 150, 180, 210, 240, 270, 300, 330, 360};
+	
+uint16_t less_than_20_rev_up[20] = {340, 320, 300, 280, 260, 240, 220, 200, 180, 160, 140, 120, 110, 100, 100, 100, 100, 100, 100, 100};
+uint16_t less_than_20_rev_dw[10] = {100, 120, 150, 180, 210, 240, 270, 300, 330, 360};
+	
+uint16_t more_than_20_rev_up[20] = {260, 240, 220, 210, 200, 180, 170, 160, 150, 140, 130, 120, 110, 100, 100, 100, 100, 100, 100, 100};
+uint16_t more_than_20_rev_dw[10] = {100, 120, 150, 180, 210, 240, 270, 300, 330, 360};
 
 //Start of local global variables
 static steps_lookup[4] = {
@@ -28,7 +46,7 @@ Materials stepper_material_position;
 
 static inline drive_stepper(stepper_steps current_step)
 {
-		PORTC = steps_lookup[current_step];
+	PORTC = steps_lookup[current_step];
 }
 
 extern inline void init_stepper()
@@ -70,19 +88,103 @@ extern void block_till_stepper_home(){
 }
 
 extern void stepper_repeat_steps(uint8_t steps, stepper_direction dir){
+	#define STEP_CONSTANT (2)
+	uint16_t *up;
+	uint16_t *dw;
+	if (buffer_get_total_sorted() < 5)
+	{
+		//usartTXs("5\r\n");
+		up = less_than_20_rev_up;
+		dw = less_than_20_rev_dw;
+	}
+	else if (buffer_get_total_sorted() < 10)
+	{
+		//usartTXs("10\r\n");
+		up = less_than_20_rev_up;
+		dw = less_than_20_rev_dw;
+	}//*/
+	else if (buffer_get_total_sorted() < 15)
+	{
+		//usartTXs("15\r\n");
+		up = less_than_20_rev_up;
+		dw = less_than_20_rev_dw;
+	}
+	else if (buffer_get_total_sorted() < 20)
+	{
+		up = less_than_20_rev_up;
+		dw = less_than_20_rev_dw;
+	}else{
+		up = less_than_20_rev_up;
+		dw = less_than_20_rev_dw;
+	}
+	
+	
 	for(uint8_t i = 0; i < steps; i++){
 		step(dir);
-		if(i <= 4 || i >= (steps-4)){
-		mTimer(STEP_TIME_MS);
-		}else if(i <= 8 || i >= (steps-8)){
-			mTimer((STEP_TIME_MS * 2) / 3);
-		}else if(i <= 12 || i >= (steps-12)){
-			mTimer(STEP_TIME_MS/2);
-		}else if(i <= 16 || i >= (steps-16)){
-			mTimer(STEP_TIME_MS/3);
+		if(i < 18){
+			uTimer140(*up);
+			up++;
+		}else if(steps - i < 10){
+			uTimer140(*dw);
+			dw++;
 		}else{
-			mTimer(STEP_TIME_MS/4);
+			uTimer140(*up);
 		}
+		if(steps - i < 36){
+			start_pwm(MOTOR_PWM);
+		}
+		
+		
+		/*if(i <= 1 || i >= (steps-1)){
+		mTimer(12);
+		}else if(i <= 2 || i >= (steps-2)){
+			mTimer(11);
+		}
+		else if(i <= 3 || i >= (steps-3)){
+			mTimer(10);
+		}
+		else if(i <= 4 || i >= (steps-4)){
+			mTimer(8);
+			if(i >= (steps-4)){
+				start_pwm(MOTOR_PWM);
+			}
+		}
+		else if(i <= 5 || i >= (steps-5)){
+			mTimer(6);
+		}
+		else if(i <= 6 || i >= (steps-6)){
+			mTimer(5);
+		}
+		else if(i <= 7 || i >= (steps-7)){
+			uTimer140(160);
+		}
+		else if(i <= 8 || i >= (steps-8)){
+			uTimer140(150);
+		}
+		else if(i <= 9 || i >= (steps-9)){
+			uTimer140(140);
+		}
+		else if(i <= 10 || i >= (steps-10)){
+			uTimer140(130);
+		}
+		else if(i <= 11 || i >= (steps-11)){
+			uTimer140(120);
+		}
+		else if(i <= 12 || i >= (steps-12)){
+			uTimer140(110);
+		}
+		else if(i <= 13 || i >= (steps-13)){
+			uTimer140(100);
+		}
+		else if(i <= 13 || i >= (steps-13)){
+			uTimer140(90);
+		}
+		else if(i <= 14 || i >= (steps-14)){
+			uTimer140(85);
+		}
+		else{
+			uTimer140(80);
+		}//*/
 	}
 }
 

@@ -15,6 +15,9 @@ void init_interrupt(){
 	//Pause button, active low
 	EICRA |= _BV(ISC11) | _BV(ISC10);
 	
+	//Pause button, active low
+	EICRA |= _BV(ISC21) | _BV(ISC20);
+	
 	//Stepper motor at home, active low
 	EICRB |= _BV(ISC51);
 	
@@ -27,5 +30,5 @@ void init_interrupt(){
 	//Magnetic detection sensor, active low
 	EICRB |= _BV(ISC71);
 	
-	EIMSK |= 0b11110011;
+	EIMSK |= 0b01110111;
 }

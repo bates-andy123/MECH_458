@@ -13,7 +13,17 @@ src/adc.d src/adc.o: ../src/adc.c \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\lock.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdbool.h \
- ../src/adc.h ../src/mtimer.h ../src/led.h
+ ../src/adc.h ../src/mtimer.h ../src/led.h ../src/usart.h ../src/asf.h \
+ ../src/ASF/common/boards/user_board/user_board.h \
+ ../src/config/conf_board.h ../src/ASF/common/boards/board.h \
+ ../src/ASF/mega/utils/compiler.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h \
+ ../src/ASF/common/utils/parts.h ../src/ASF/common/utils/interrupt.h \
+ ../src/ASF/common/utils/interrupt/interrupt_avr8.h \
+ ../src/ASF/mega/utils/progmem.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
+ ../src/ASF/mega/utils/status_codes.h
 
 c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\io.h:
 
@@ -48,3 +58,31 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\
 ../src/mtimer.h:
 
 ../src/led.h:
+
+../src/usart.h:
+
+../src/asf.h:
+
+../src/ASF/common/boards/user_board/user_board.h:
+
+../src/config/conf_board.h:
+
+../src/ASF/common/boards/board.h:
+
+../src/ASF/mega/utils/compiler.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stddef.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdlib.h:
+
+../src/ASF/common/utils/parts.h:
+
+../src/ASF/common/utils/interrupt.h:
+
+../src/ASF/common/utils/interrupt/interrupt_avr8.h:
+
+../src/ASF/mega/utils/progmem.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h:
+
+../src/ASF/mega/utils/status_codes.h:

@@ -28,6 +28,16 @@ typedef enum
 	Counter_Clock_Wise = -1
 }stepper_direction;
 
+/*
+
+
+less_than_10[] = {};
+less_than_15[] = {};
+less_than_15[] = {};
+more_than_20[] = {};
+
+*/
+
 
 /*
 Purpose:	Used to initialize the stepper GPIO pins

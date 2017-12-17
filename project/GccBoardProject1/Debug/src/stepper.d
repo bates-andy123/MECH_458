@@ -23,7 +23,9 @@ src/stepper.d src/stepper.o: ../src/stepper.c ../src/stepper.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\interrupt.h \
  ../src/ASF/mega/utils/progmem.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\avr\pgmspace.h \
- ../src/ASF/mega/utils/status_codes.h ../src/mtimer.h
+ ../src/ASF/mega/utils/status_codes.h ../src/mtimer.h ../src/usart.h \
+ ../src/asf.h ../src/pwm.h ../src/Buffer.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h
 
 ../src/stepper.h:
 
@@ -84,3 +86,13 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 ../src/ASF/mega/utils/status_codes.h:
 
 ../src/mtimer.h:
+
+../src/usart.h:
+
+../src/asf.h:
+
+../src/pwm.h:
+
+../src/Buffer.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\string.h:

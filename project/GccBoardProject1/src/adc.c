@@ -12,10 +12,13 @@
 #include "adc.h"
 #include "mtimer.h"
 #include "led.h"
+#include "usart.h"
 
 uint16_t ADC_Min_result;
 uint16_t Total_Count;
-bool ADC_keep_running;
+uint16_t default_voltage;
+uint16_t default_voltage_90_percent;
+uint16_t time_under_90_percent_volt;
 
 extern void init_adc(){
 	ADMUX = (1<< REFS0)|(1<<MUX0);			// Left adjust, and use VCC as top reference
@@ -25,11 +28,20 @@ extern void init_adc(){
 	ADC_Min_result = 0xFFFF;
 	Total_Count = 0;
 	ADC_keep_running = false;
+	
+	
+	default_voltage = 0;
+	default_voltage_90_percent = 0;
+	time_under_90_percent_volt = 0;
 }
 
-static inline void adc_do_conv(){
-	// initialize the ADC, start one conversion at the beginning ==========
-	ADCSRA |= _BV(ADSC);
+extern void set_default_voltage(){
+	default_voltage = ADC;
+	//default_voltage_90_percent = (ADC*20)/18;
+	default_voltage_90_percent = 976;
+	usartTXs("Thres: ");
+	usartNumTXs(default_voltage_90_percent);
+	usartTXs("\r\n");
 }
 
 extern inline void adc_start_conv(){
@@ -43,25 +55,36 @@ extern inline void adc_stop_conv(){
 }
 
 
-extern uint16_t read_Min_ADC(){
+extern inline uint16_t read_Min_ADC(){
 	return ADC_Min_result;
 }
 
-extern void ADC_reset_count(){
+extern inline void ADC_reset_count(){
 	Total_Count = 0;
+	time_under_90_percent_volt = 0;
 }
 
-extern uint16_t ADC_return_Count(){
+extern inline uint16_t ADC_return_Count(){
 	return Total_Count;
+}
+
+extern inline uint16_t ADC_return_time_under(){
+	return time_under_90_percent_volt;
 }
 
 extern inline void ADC_interrupt(){
 	Total_Count = Total_Count + 1;
-	ADC_result = ADC;
 	if(ADC_Min_result > ADC){
 		ADC_Min_result = ADC;
 	}
+	if(default_voltage_90_percent > ADC){
+		time_under_90_percent_volt = time_under_90_percent_volt + 1;
+	}
+	//*/
+	/*
+	if(ADC_keep_running == true){
+		usartNumTXs(ADC);
+	}//*/
+	//PORTA = Total_Count;
 	adc_start_conv();
-	//PORTA = ADC_Min_result;
-	//status_leds(bottom, ADC_Min_result>>6);
 }

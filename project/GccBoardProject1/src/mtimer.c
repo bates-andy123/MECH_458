@@ -13,21 +13,39 @@ extern void mTimerConfig()
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
 	TCCR1B |= _BV(CS10);
+	TCCR1B |= _BV(WGM12); /*CTC mode*/
+	
+	OCR1A = 44; //50
 }
 
 extern void timer0_init()
 {
-	TCCR1B |= _BV(CS10);
-	TIMSK0 |= _BV(TOIE1);
+	TCCR3B |= _BV(CS30);
+	TIMSK3 |= _BV(OCIE3A);
+	TCCR3A |= _BV(WGM31);
+	OCR3A = 50; //1000
 }
 
-extern void mTimer(int count)
+extern void mTimer(uint8_t count)
 {
-	int i = 0;
+	uint8_t i = 0;
 	
-	TCCR1B |= _BV(WGM12); /*CTC mode*/
+	TCNT1 = 0x0000;
 	
-	OCR1A = 0x03e8; //1000
+	//TIMSK1 |= 0b00000010;
+	
+	TIFR1 |= _BV(OCF1A);
+	
+	while (i < count)
+	{
+		uTimer140(20);
+		i++;
+	}
+	return;
+}
+
+extern void inline uTimer140(uint16_t count){
+	uint16_t i = 0;
 	
 	TCNT1 = 0x0000;
 	
@@ -45,3 +63,6 @@ extern void mTimer(int count)
 	}
 	return;
 }
+
+/*
+*/

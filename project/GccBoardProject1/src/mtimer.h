@@ -9,8 +9,9 @@
 #ifndef MTIMER_H_
 #define MTIMER_H_
 
-extern void  mTimer(int count);
+extern void mTimer(uint8_t count);
 extern void mTimerConfig();
+extern inline void uTimer140(uint16_t count);
 
 extern void timer0_init();
 

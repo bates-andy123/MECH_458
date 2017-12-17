@@ -13,11 +13,23 @@
 #include <stdlib.h>
 #include <avr/io.h>
 
+uint8_t total_sorted;
+
 extern void buf_init(){
 	most_recent_pushed_idx = 0;
 	current_push_idx = 0;
 	first_on_belt = 0;
 	most_recent_idx_to_past_second_prox_sensor = 0;
+	
+	
+	//do know about totals
+	white_sorted = 0;
+	black_sorted = 0;
+	alum_sorted = 0;
+	steel_sorted = 0;
+
+	total_sorted = 0;
+
 }
 
 extern void buf_new(){
@@ -58,16 +70,26 @@ extern inline Materials buf_get_first_item_material(){
 extern inline remove_first_item(){
 	belt[first_on_belt].last_stage = Complete;
 	first_on_belt++;
+	total_sorted++;
+	buf_length--;
+}
+
+extern inline uint8_t buffer_get_length(){
+	return buf_length;
+}
+
+extern inline uint8_t buffer_get_total_sorted(){
+	return total_sorted;
 }
 
 extern inline buffer_print_first_on_belt(){
 	if(belt[first_on_belt].assumed_material == Aluminum){
-		usartTXs("Alum\r\n");
+		//usartTXs("Alum\r\n");
 	}else if(belt[first_on_belt].assumed_material == Steel){
-		usartTXs("Steel\r\n");
+		//usartTXs("Steel\r\n");
 	}else if(belt[first_on_belt].assumed_material == White){
-		usartTXs("White\r\n");
+		//usartTXs("White\r\n");
 	}else{
-		usartTXs("Black\r\n");
+		//usartTXs("Black\r\n");
 	}
 }

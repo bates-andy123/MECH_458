@@ -13,6 +13,7 @@
 
 uint16_t ADC_result;
 bool ADC_result_change_flag;
+bool ADC_keep_running;
 
 extern void init_adc();
 
@@ -24,8 +25,14 @@ extern uint16_t read_Min_ADC();
 
 extern inline void ADC_interrupt();
 
-extern void ADC_reset_count();
+extern inline void ADC_reset_count();
 
-extern uint16_t ADC_return_Count();
+extern inline uint16_t ADC_return_Count();
+
+extern inline uint16_t ADC_return_time_under();
+
+extern inline uint16_t biggest_starting_value_func();
+
+extern void set_default_voltage();
 
 #endif /* ADC_H_ */

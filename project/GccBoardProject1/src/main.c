@@ -39,15 +39,12 @@ enum belt_status{
 };
 
 
-
-#define MOTOR_PWM	(60)
 #define BELT_JOLT_TIME	(21)
 /* global variables */
 /* Avoid using these */
 
-enum belt_status current_belt_status = belt_running;
-enum pause_button_state  pause_state = paused_state_is_running;
-
+volatile uint8_t pause_fsm = 0;
+volatile uint8_t pause_flag = 0;
 
 /* main routine */
 int main()
@@ -65,7 +62,18 @@ int main()
 	//timer0_init();
 	sei();	
 	
-	usartTXs("Booting...\r\n");
+	pause_fsm = paused_state_is_running;
+	
+	pause_state = paused_state_is_running;
+	current_belt_status = belt_running;
+	ramp_state = ramp_state_normal;
+	
+	usartTXs("Booting...");
+	
+	/*while(1){
+		uTimer140(1);
+		PORTA ^= 1;
+	}//*/
 	
 	mTimer(200);
 	block_till_stepper_home();
@@ -78,25 +86,36 @@ int main()
 	start_pwm(MOTOR_PWM);
 	
 	adc_start_conv();
-	//PORTA = 0x80;
+	
+	mTimer(2);
+	set_default_voltage();
 
-	mTimer(200);
+	usartTXs("OK!\r\n");
+	mTimer(2);
+	start_pwm(MOTOR_PWM);
+	
+	
 	while(1){
-		//PORTA |= (buf_get_first_item_material() == get_current_stepper_material());
-		//PORTA ^= 2;
-		if(buf_get_first_item_material() == get_current_stepper_material()){
-			if(current_belt_status == belt_stopped && pause_state == paused_state_is_running){
-				start_pwm(MOTOR_PWM);
-				remove_first_item();
-				current_belt_status = belt_running;
-				start_pwm(250);
-				mTimer(BELT_JOLT_TIME);
-				start_pwm(MOTOR_PWM);
+		if(pause_state == paused_state_is_stop){
+			usartTXs("\r\nBuffer: ");
+			usartNumTXs(buffer_get_length());
+			usartTXs("\r\nSteel: ");
+			usartNumTXs(steel_sorted);
+			usartTXs("\r\nAlum: ");
+			usartNumTXs(alum_sorted);
+			usartTXs("\r\nWhite: ");
+			usartNumTXs(white_sorted);
+			usartTXs("\r\nBlack: ");
+			usartNumTXs(black_sorted);
+			usartTXs("\r\n");
+			while(pause_state == paused_state_is_stop){
 			}
-		}else{
-			go_to_material(buf_get_first_item_material());
 		}
-
+		/*while(buffer_get_length() == 0 && ramp_state == ramp_state_do_ramp){
+			mTimer(BELT_JOLT_TIME);
+			stop_pwm();
+		}*/
+		
 	}
 	
 }/* main */
@@ -114,18 +133,63 @@ ISR(ADC_vect)
 
 //First Promixity sensor
 ISR(INT4_vect){
-	buf_new();
+	if(ramp_state == ramp_state_normal){
+		buf_new();
+	}
 }
 
 //Final Promixity sensor
 ISR(INT6_vect){
+	if(buf_get_first_item_material() == Black){
+		black_sorted++;
+	}
+	else if(buf_get_first_item_material() == White){
+		white_sorted++;
+	}
+	else if(buf_get_first_item_material() == Aluminum){
+		alum_sorted++;
+	}
+	else{
+		steel_sorted++;
+	}
+	
+	static uint8_t counter = 2;
+	
+	if(ramp_state == ramp_state_do_ramp){
+		
+		counter--;
+	}
+	
 	if(get_current_stepper_material() == buf_get_first_item_material()){
 		mTimer(BELT_JOLT_TIME);
 		remove_first_item();
 	}else{
 		stop_pwm();
 		current_belt_status = belt_stopped;
+		go_to_material(buf_get_first_item_material());
+		start_pwm(MOTOR_PWM);
+		remove_first_item();
 	}
+	if(counter == 0){
+		mTimer(150);
+		stop_pwm();
+		usartTXs("\r\nBuffer: ");
+		usartNumTXs(0);
+		usartTXs("\r\nSteel: ");
+		usartNumTXs(steel_sorted);
+		usartTXs("\r\nAlum: ");
+		usartNumTXs(alum_sorted);
+		usartTXs("\r\nWhite: ");
+		usartNumTXs(white_sorted);
+		usartTXs("\r\nBlack: ");
+		usartNumTXs(black_sorted);
+		usartTXs("\r\n");
+		while(1);
+	}
+	
+	/*//usartNumTXs(buffer_get_total_sorted());
+	//usartTXs("\r\n");
+	mTimer(7);//*/
 }
 
 //Magnetic sensor
@@ -142,6 +206,7 @@ ISR(INT0_vect){
 		leaving
 	};
 	
+	static uint16_t ratio_under = 0;
 	//At start we can pretend an item just left	
 	static enum states last_state = leaving;
 	
@@ -149,47 +214,74 @@ ISR(INT0_vect){
 		status_leds(top, green);
 		last_state = entering;
 		ADC_reset_count();
+		ADC_keep_running = true;
+		//adc_start_conv();
 	}else{
+		ADC_keep_running = false;
 		status_leds(top, orange);
 		last_state = leaving;
 		
 		PORTA = read_Min_ADC();
 		
-		if(read_Min_ADC() > BLACK_ABOVE_TH_12b){
-			usartTXs("Black ");
-			set_second_prox_sensor_item(Black, Delay_stage);	
-		}else if(read_Min_ADC() > WHITE_ABOVE_TH_12b){
-			usartTXs("White ");
-			set_second_prox_sensor_item(White, Delay_stage);
+		ratio_under = (ADC_return_time_under() * 100) / ADC_return_Count();
+		
+		if(read_Min_ADC() > WHITE_ABOVE_TH_12b){
+			if(ratio_under > 30){
+				//usartTXs("White ");
+				set_second_prox_sensor_item(White, Delay_stage);	
+			}else{
+				//usartTXs("Black ");
+				set_second_prox_sensor_item(Black, Delay_stage);
+			}
 		}else if(read_Min_ADC() > STEEL_ABOVE_TH_12b){
-			usartTXs("Steel ");
+			//usartTXs("Steel ");
 			set_second_prox_sensor_item(Steel, Delay_stage);
 		}else{
-			usartTXs("Alum ");
+			//usartTXs("Alum ");
 			set_second_prox_sensor_item(Aluminum, Delay_stage);
 		}
-		usartNumTXs(read_Min_ADC());
-		usartTXs(" Count ");
-		usartNumTXs(ADC_return_Count());
-		usartTXs("\r\n");
-		//stop_pwm();
+
 		adc_stop_conv();
 	}
 }
 
 ISR(INT1_vect){
-	pause_state = !pause_state;
-	if(pause_state == paused_state_is_stop){
-		usartTXs("pause\r\n");
+	//usartNumTXs(pause_state);
+	//usartTXs("\r\n");
+	if(pause_state == paused_state_is_running){	
+		pause_state = paused_state_is_stop;
+		usartTXs("Pause ON\r\n");
+		////usartNumTXs(pause_state);
+		////usartTXs("\r\n");
 		stop_pwm();
+		////usartTXs("Items on Belt ");
+		////usartNumTXs(buffer_get_length());
+		////usartTXs("\r\n");
 	}else{
+		////usartNumTXs(pause_state);
+		////usartTXs("\r\n");
+		pause_state = paused_state_is_running;
 		start_pwm(MOTOR_PWM);
+		usartTXs("Pause OFF\r\n");
 	}
-	
+	mTimer(5);
 }
 
-ISR(TIMER0_OVF_vect)
+ISR(INT2_vect){
+	ramp_state = !ramp_state;
+	if(ramp_state == ramp_state_do_ramp){
+		usartTXs("Ramp ON\r\n");
+	}else{
+		usartTXs("Ramp OFF\r\n");	
+	}
+	mTimer(5);
+}
+
+ISR(TIMER3_COMPA_vect )
 {
 	// keep a track of number of overflows
-	usartTXs("i\r\n");
+	
+	//PORTA ^= 1;
+	//TIFR3 |= _BV(OCF3A);
+	//TIMSK3 |= _BV(OCIE3A);
 }

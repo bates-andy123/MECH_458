@@ -9,6 +9,7 @@
 #include <avr/io.h>
 #include "mtimer.h"
 
+//Configure mTimer
 extern void mTimerConfig()
 {
 	/* Insert system clock initialization code here (sysclk_init()). */
@@ -18,6 +19,7 @@ extern void mTimerConfig()
 	OCR1A = 44; //50
 }
 
+//Initialize the timer peripheal
 extern void timer0_init()
 {
 	TCCR3B |= _BV(CS30);
@@ -26,14 +28,13 @@ extern void timer0_init()
 	OCR3A = 50; //1000
 }
 
+//Allow time on the millisecond level, utilizing uTimer
 extern void mTimer(uint8_t count)
 {
 	uint8_t i = 0;
 	
 	TCNT1 = 0x0000;
-	
-	//TIMSK1 |= 0b00000010;
-	
+		
 	TIFR1 |= _BV(OCF1A);
 	
 	while (i < count)
@@ -44,13 +45,12 @@ extern void mTimer(uint8_t count)
 	return;
 }
 
+//Enable timing to be done on the micro second level
 extern void inline uTimer140(uint16_t count){
 	uint16_t i = 0;
 	
 	TCNT1 = 0x0000;
-	
-	//TIMSK1 |= 0b00000010;
-	
+		
 	TIFR1 |= _BV(OCF1A);
 	
 	while (i < count)

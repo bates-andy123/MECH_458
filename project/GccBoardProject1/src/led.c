@@ -15,10 +15,13 @@ extern void init_led(){
 	PORTA = 0x0; /* initialize port to low – turn on LEDs */
 }
 
+//A convient function to update the Display LEDs
 extern inline void write_to_led_display(uint8_t value){
 	PORTA = value;
 }
 
+
+//This function shifts the LEDs in the night rider display manner
 extern void night_rider_update(){
 	//local variables
 	static uint8_t current_LED = 0;
@@ -32,6 +35,7 @@ extern void night_rider_update(){
 	current_LED %= 10;
 }
 
+//A functoin to control the multi-colour leds without having to do binary arthimetic
 extern void status_leds(Status_LED_Position pos, Status_LED_Colour colour){
 		if(pos == top){
 			PORTD &= ~0xC0;

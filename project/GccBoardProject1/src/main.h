@@ -3,6 +3,8 @@
  *
  * Created: 2017-11-18 2:46:42 PM
  *  Author: abates
+ *
+ * Purpose: This file is used as global constants to be shared across the system
  */ 
 
 
@@ -18,6 +20,7 @@
 
 #define TIME_BETWEEN_STEPS	(2500)
 
+//Allow the station to be changed via define statement
 #define STATION		(6)
 
 #if STATION == 4

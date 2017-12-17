@@ -2,7 +2,9 @@
  * adc.h
  *
  * Created: 2017-10-31 8:01:17 PM
- *  Author: abates
+ * Author: abates
+ *
+ * Purpose: This header file provides the prototypes to the ADC files 
  */ 
 
 
@@ -15,13 +17,13 @@ uint16_t ADC_result;
 bool ADC_result_change_flag;
 bool ADC_keep_running;
 
-extern void init_adc();
+extern void init_adc();  //Initialize the ADC
 
-extern inline void adc_start_conv();
+extern inline void adc_start_conv();  //Do and ADC conversion
 
-extern inline void adc_stop_conv();
+extern inline void adc_stop_conv(); //Stop the ADC and reset all the variables to zero
 
-extern uint16_t read_Min_ADC();
+extern uint16_t read_Min_ADC();  //Return the minimum the ADC result
 
 extern inline void ADC_interrupt();
 

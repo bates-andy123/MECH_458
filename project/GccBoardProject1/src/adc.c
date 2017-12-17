@@ -2,7 +2,10 @@
  * adc.c
  *
  * Created: 2017-10-31 8:00:58 PM
- *  Author: abates
+ * Author: abates
+ * Purpose: To initialize the ADC and provide function to extract useful values
+ *
+ *
  */ 
 
 #include <avr/io.h>
@@ -37,7 +40,6 @@ extern void init_adc(){
 
 extern void set_default_voltage(){
 	default_voltage = ADC;
-	//default_voltage_90_percent = (ADC*20)/18;
 	default_voltage_90_percent = 976;
 	usartTXs("Thres: ");
 	usartNumTXs(default_voltage_90_percent);
@@ -47,7 +49,6 @@ extern void set_default_voltage(){
 extern inline void adc_start_conv(){
 	// initialize the ADC, start one conversion at the beginning ==========
 	ADCSRA |= _BV(ADSC);
-	//PORTA ^= 0x20;
 }
 
 extern inline void adc_stop_conv(){
@@ -73,18 +74,12 @@ extern inline uint16_t ADC_return_time_under(){
 }
 
 extern inline void ADC_interrupt(){
-	Total_Count = Total_Count + 1;
-	if(ADC_Min_result > ADC){
-		ADC_Min_result = ADC;
+	Total_Count = Total_Count + 1;  //Total amount of drops 
+	if(ADC_Min_result > ADC){ //Check if the current ADC value is less the current global min
+		ADC_Min_result = ADC; //IF yes update new globabl min
 	}
-	if(default_voltage_90_percent > ADC){
-		time_under_90_percent_volt = time_under_90_percent_volt + 1;
+	if(default_voltage_90_percent > ADC){  // The threshold used to analze how wide the band is
+		time_under_90_percent_volt = time_under_90_percent_volt + 1; //The global count of times below threshold
 	}
-	//*/
-	/*
-	if(ADC_keep_running == true){
-		usartNumTXs(ADC);
-	}//*/
-	//PORTA = Total_Count;
-	adc_start_conv();
+	adc_start_conv();  // Do another ADC conversion
 }

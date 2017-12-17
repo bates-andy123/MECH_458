@@ -3,6 +3,8 @@
  *
  * Created: 2017-11-18 2:11:00 PM
  *  Author: abates
+ * Purpose: All of the system interrupt are initializied in one spot to allow 
+ *		all settings of the system to be easily findable.
  */ 
 
 #include <avr/io.h>

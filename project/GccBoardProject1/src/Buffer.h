@@ -2,7 +2,9 @@
  * Buffer.h
  *
  * Created: 2017-11-18 4:27:20 PM
- *  Author: abates
+ * Author: abates
+ * Purpose: Prototypes to the buffer file, allowing scope to be maintained. 
+ *
  */ 
 
 

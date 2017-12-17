@@ -9,6 +9,7 @@
 #include <string.h>
 #include "mtimer.h"
 
+//Initialize UART
 extern void usartInit (uint16_t baud)
 {
 	//Set baud rate
@@ -18,7 +19,6 @@ extern void usartInit (uint16_t baud)
 	UCSR1A |= DoubSpeed;
 	
 	UCSR1B |= TxEn;			//Enable TX mode for USART1
-	//UCSR1B |= RxEn;		//Enable RX mode for USART1
 	UCSR1C |= Mode8Bit;		//Set Usart to 8 bit data mode
 	
 }
@@ -45,6 +45,7 @@ extern void usartTXs (const char *string)
 	}
 }
 
+//Convert a number to ascii representation
 extern void usartNumTXs(uint16_t num){
 
 	usartTX((char)(((num/1000)%10) + 48));

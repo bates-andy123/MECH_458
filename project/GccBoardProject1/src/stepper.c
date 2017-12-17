@@ -18,6 +18,8 @@
 #define STEPS_FOR_90_DEGREES	(50)
 #define STEPS_FOR_180_DEGREES	(100)
 
+//Look up tables to get optimal motor torque times
+
 uint16_t less_than_5_rev_up[20] = {280, 265, 250, 235, 220, 205, 190, 160, 150, 140, 130, 120, 110, 100, 90, 90, 90, 90, 90, 90};
 uint16_t less_than_5_rev_dw[10] = {90, 120, 150, 180, 210, 240, 270, 300, 330, 360};
 
@@ -41,20 +43,24 @@ static steps_lookup[4] = {
 	0b110101  //0b000101  //0xx101 step_4
 };
 
+//Local global variables
 bool home_flag;
 Materials stepper_material_position;
 
+//Drive the stepper to the desired step
 static inline drive_stepper(stepper_steps current_step)
 {
 	PORTC = steps_lookup[current_step];
 }
 
+//Initialize the stepper peripheals
 extern inline void init_stepper()
 {
 	home_flag = false;
 	DDRC = 0xFF; /* Sets all pins on Port D to output */
 }
 
+//A function that tracks the current stepper step and does the next one
 extern void step(stepper_direction dir)
 {
 	static uint8_t current_step = step_1;
@@ -71,14 +77,17 @@ extern void step(stepper_direction dir)
 	drive_stepper(current_step);
 }
 
+//Return the current position on the stepper
 extern inline Materials get_current_stepper_material(){
 	return stepper_material_position;
 }
 
+//Check if the stepper is in the home position
 extern bool check_if_home(){
 	return (bool)(home_flag); 
 }
 
+//Block until the stepper reaches the home position
 extern void block_till_stepper_home(){
 	while (check_if_home() == false){
 		step(Clock_Wise);
@@ -87,6 +96,7 @@ extern void block_till_stepper_home(){
 	stepper_material_position = Black;
 }
 
+//Repeat steps until the stepper completes desired number of steps
 extern void stepper_repeat_steps(uint8_t steps, stepper_direction dir){
 	#define STEP_CONSTANT (2)
 	uint16_t *up;
@@ -133,61 +143,11 @@ extern void stepper_repeat_steps(uint8_t steps, stepper_direction dir){
 		if(steps - i < 36){
 			start_pwm(MOTOR_PWM);
 		}
-		
-		
-		/*if(i <= 1 || i >= (steps-1)){
-		mTimer(12);
-		}else if(i <= 2 || i >= (steps-2)){
-			mTimer(11);
-		}
-		else if(i <= 3 || i >= (steps-3)){
-			mTimer(10);
-		}
-		else if(i <= 4 || i >= (steps-4)){
-			mTimer(8);
-			if(i >= (steps-4)){
-				start_pwm(MOTOR_PWM);
-			}
-		}
-		else if(i <= 5 || i >= (steps-5)){
-			mTimer(6);
-		}
-		else if(i <= 6 || i >= (steps-6)){
-			mTimer(5);
-		}
-		else if(i <= 7 || i >= (steps-7)){
-			uTimer140(160);
-		}
-		else if(i <= 8 || i >= (steps-8)){
-			uTimer140(150);
-		}
-		else if(i <= 9 || i >= (steps-9)){
-			uTimer140(140);
-		}
-		else if(i <= 10 || i >= (steps-10)){
-			uTimer140(130);
-		}
-		else if(i <= 11 || i >= (steps-11)){
-			uTimer140(120);
-		}
-		else if(i <= 12 || i >= (steps-12)){
-			uTimer140(110);
-		}
-		else if(i <= 13 || i >= (steps-13)){
-			uTimer140(100);
-		}
-		else if(i <= 13 || i >= (steps-13)){
-			uTimer140(90);
-		}
-		else if(i <= 14 || i >= (steps-14)){
-			uTimer140(85);
-		}
-		else{
-			uTimer140(80);
-		}//*/
 	}
 }
 
+
+//Based on the current position go to another position, block until there
 extern void go_to_material(Materials mat){
 	if(stepper_material_position == Black){
 		if(mat == Steel){
@@ -225,6 +185,7 @@ extern void go_to_material(Materials mat){
 	stepper_material_position = mat;
 }
 
+//The ISR used for the home position
 ISR(INT5_vect){
 	home_flag = true;
 }

@@ -49,7 +49,10 @@ volatile uint8_t pause_flag = 0;
 /* main routine */
 int main()
 {	
+	//stop interrupts
 	cli();
+	
+	//initialize system
 	mTimerConfig();
 	init_led();
 	init_interrupt();
@@ -59,21 +62,19 @@ int main()
 	buf_init();
 	usartInit(0xC);
 	
-	//timer0_init();
+	//turn all interrupts back on
 	sei();	
 	
+	
+	//Initialize the global variables used
 	pause_fsm = paused_state_is_running;
 	
 	pause_state = paused_state_is_running;
 	current_belt_status = belt_running;
 	ramp_state = ramp_state_normal;
 	
+	//Begin doing a full system boot of mechanical systems
 	usartTXs("Booting...");
-	
-	/*while(1){
-		uTimer140(1);
-		PORTA ^= 1;
-	}//*/
 	
 	mTimer(200);
 	block_till_stepper_home();
@@ -90,12 +91,14 @@ int main()
 	mTimer(2);
 	set_default_voltage();
 
+	//System boot is complete, print out information
 	usartTXs("OK!\r\n");
 	mTimer(2);
 	start_pwm(MOTOR_PWM);
-	
+	//Fired up the motor, begin sorting.
 	
 	while(1){
+		//If we hit the puase button print all the materials in the buffer
 		if(pause_state == paused_state_is_stop){
 			usartTXs("\r\nBuffer: ");
 			usartNumTXs(buffer_get_length());
@@ -111,11 +114,6 @@ int main()
 			while(pause_state == paused_state_is_stop){
 			}
 		}
-		/*while(buffer_get_length() == 0 && ramp_state == ramp_state_do_ramp){
-			mTimer(BELT_JOLT_TIME);
-			stop_pwm();
-		}*/
-		
 	}
 	
 }/* main */
@@ -140,6 +138,8 @@ ISR(INT4_vect){
 
 //Final Promixity sensor
 ISR(INT6_vect){
+	
+	//When we reach the final promixity sensor add the material to it's sorted count
 	if(buf_get_first_item_material() == Black){
 		black_sorted++;
 	}
@@ -153,13 +153,17 @@ ISR(INT6_vect){
 		steel_sorted++;
 	}
 	
+	//A static counter used to sort the last item if ramped pushed
 	static uint8_t counter = 2;
 	
+	//Only decrement the counter if ramped is pushed
 	if(ramp_state == ramp_state_do_ramp){
 		
 		counter--;
 	}
 	
+	//Check if the stepper is in the right position
+	//Depending if it is or isn't we might have to stop the belt for longer
 	if(get_current_stepper_material() == buf_get_first_item_material()){
 		mTimer(BELT_JOLT_TIME);
 		remove_first_item();
@@ -170,6 +174,8 @@ ISR(INT6_vect){
 		start_pwm(MOTOR_PWM);
 		remove_first_item();
 	}
+	
+	//This will only happen if the ramp is pushed and the two items have passed throug
 	if(counter == 0){
 		mTimer(150);
 		stop_pwm();
@@ -184,19 +190,14 @@ ISR(INT6_vect){
 		usartTXs("\r\nBlack: ");
 		usartNumTXs(black_sorted);
 		usartTXs("\r\n");
+		//block forever
 		while(1);
 	}
-	
-	/*//usartNumTXs(buffer_get_total_sorted());
-	//usartTXs("\r\n");
-	mTimer(7);//*/
 }
 
 //Magnetic sensor
 ISR(INT7_vect){
-	//buf_is_magnetic();
-	//stop_pwm();
-	//go_to_material(buf_get_first_item_material());
+	//was not used, done by ADC
 }
 
 ISR(INT0_vect){
@@ -223,43 +224,48 @@ ISR(INT0_vect){
 		
 		PORTA = read_Min_ADC();
 		
+		
+		//Try and find the material
 		ratio_under = (ADC_return_time_under() * 100) / ADC_return_Count();
 		
 		if(read_Min_ADC() > WHITE_ABOVE_TH_12b){
 			if(ratio_under > 30){
-				//usartTXs("White ");
+				usartTXs("White ");
 				set_second_prox_sensor_item(White, Delay_stage);	
 			}else{
-				//usartTXs("Black ");
+				usartTXs("Black ");
 				set_second_prox_sensor_item(Black, Delay_stage);
 			}
 		}else if(read_Min_ADC() > STEEL_ABOVE_TH_12b){
-			//usartTXs("Steel ");
+			usartTXs("Steel ");
 			set_second_prox_sensor_item(Steel, Delay_stage);
 		}else{
-			//usartTXs("Alum ");
+			usartTXs("Alum ");
 			set_second_prox_sensor_item(Aluminum, Delay_stage);
 		}
 
+		//reset the converstoin for next time
 		adc_stop_conv();
 	}
 }
 
+
+//Pause Button ISR
 ISR(INT1_vect){
-	//usartNumTXs(pause_state);
-	//usartTXs("\r\n");
+	usartNumTXs(pause_state);
+	usartTXs("\r\n");
 	if(pause_state == paused_state_is_running){	
 		pause_state = paused_state_is_stop;
 		usartTXs("Pause ON\r\n");
-		////usartNumTXs(pause_state);
-		////usartTXs("\r\n");
+		usartNumTXs(pause_state);
+		usartTXs("\r\n");
 		stop_pwm();
-		////usartTXs("Items on Belt ");
-		////usartNumTXs(buffer_get_length());
-		////usartTXs("\r\n");
+		usartTXs("Items on Belt ");
+		usartNumTXs(buffer_get_length());
+		usartTXs("\r\n");
 	}else{
-		////usartNumTXs(pause_state);
-		////usartTXs("\r\n");
+		usartNumTXs(pause_state);
+		usartTXs("\r\n");
 		pause_state = paused_state_is_running;
 		start_pwm(MOTOR_PWM);
 		usartTXs("Pause OFF\r\n");
@@ -267,6 +273,7 @@ ISR(INT1_vect){
 	mTimer(5);
 }
 
+//Ramp Button ISR
 ISR(INT2_vect){
 	ramp_state = !ramp_state;
 	if(ramp_state == ramp_state_do_ramp){

@@ -3,6 +3,10 @@
  *
  * Created: 2017-11-18 4:26:52 PM
  *  Author: abates
+ *
+ * Purpose: Custom written circle buffer
+ * 		Allows the returning of the first material past certain points
+		Also keeps a global count of the amount of items that passed certain points.
  */ 
 
 

@@ -3,6 +3,8 @@
  *
  * Created: 2017-11-18 2:11:12 PM
  *  Author: abates
+ *
+ * Purpose: To prottype the interrupt initializition function
  */ 
 
 
